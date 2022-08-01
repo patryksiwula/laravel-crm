@@ -29,7 +29,7 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $user->name }}</td>
                                         <td class="p-3 px-5">{{ $user->email }}</td>
-                                        <td class="p-3 px-5">{{ __('admin') }}</td>
+                                        <td class="p-3 px-5">{{ $user->getRoleNames()[0] }}</td>
                                         <td class="p-3 px-5 flex">
                                             <a href="#" class="text-sm bg-blue-500 hover:bg-blue-700 
                                                 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
