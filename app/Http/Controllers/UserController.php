@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -44,9 +46,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request, UserService $userService): RedirectResponse
     {
-        //
+        $user = $userService->createUser(
+			$request->name,
+			$request->email,
+			$request->password,
+			$request->role
+		);
+
+		return redirect()->route('users.index')
+			->withMessage('action', 'user_created');
     }
 
     /**
