@@ -6,7 +6,7 @@
             <h1 class="text-xl font-bold">{{ __('Create user') }}</h1>
         </div>
 
-        <div class="w-full h-full p-10 bg-gray-200">
+        <div class="w-full h-full px-80 py-10 bg-gray-200">
             <div class="w-full bg-white p-8 shadow-md">
                 <form action="#" method="POST">
                     @csrf
