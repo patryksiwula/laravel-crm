@@ -1,17 +1,15 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
+@section('content')
+    <main class="min-h-screen w-full ml-60 bg-gray-200">
+        <div class="w-full py-5 text-center bg-white shadow-sm">
+            <h1 class="text-xl font-bold">{{ __('Dashboard') }}</h1>
+        </div>
+
+        <div class="w-full h-full p-6 bg-gray-200">
+            <div class="w-full h-full bg-white">
+                {{ __('Test') }}
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </main>
+@endsection
