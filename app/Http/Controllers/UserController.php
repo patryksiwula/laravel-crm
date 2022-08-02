@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Spatie\Permission\Models\Role;
@@ -44,7 +45,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreUserRequest $request, UserService $userService): RedirectResponse
     {
@@ -73,24 +74,37 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit($id)
+    public function edit(Request $request, User $user): View
     {
-        //
+        $roles = Role::all();
+
+		return view('users.edit', [
+			'user' => $user,
+			'roles' => $roles
+		]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user, UserService $userService)
     {
-        //
+        $userService->updateUser(
+			$user,
+			$request->name,
+			$request->email,
+			$request->role
+		);
+
+		return redirect()->route('users.index')
+			->withMessage('action', 'user_updated');
     }
 
     /**

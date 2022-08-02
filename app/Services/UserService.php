@@ -30,4 +30,25 @@ class UserService
 
 		return $user;
 	}
+	
+	/**
+	 * Update the selected user
+	 *
+	 * @param  \App\Models\User $user
+	 * @param  string $name
+	 * @param  string $email
+	 * @param  int $role
+	 * @return \App\Models\User
+	 */
+	public function updateUser(User $user, string $name, string $email, int $role): User
+	{
+		$user->update([
+			'name' => $name,
+			'email' => $email
+		]);
+
+		$user->syncRoles(Role::findById($role));
+
+		return $user;
+	}
 }
