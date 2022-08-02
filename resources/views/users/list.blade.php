@@ -7,12 +7,15 @@
         </div>
 
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
-            <div class="mb-6">
-                <a href="{{ route('users.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
-                    focus:outline-none focus:shadow-outline font-bold">
-                    {{ __('Create user') }} +
-                </a>
-            </div>
+			@can('create-users')
+				<div class="mb-6">
+					<a href="{{ route('users.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
+						focus:outline-none focus:shadow-outline font-bold">
+						{{ __('Create user') }} +
+					</a>
+				</div>
+			@endcan
+			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
                     <div class="flex justify-center">
@@ -21,8 +24,11 @@
                                 <tr class="border-b">
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Email') }}</th>
-                                    <th class="text-left p-3 px-5">{{ __('Role') }}</th>   
-                                    <th class="text-left p-3 px-5">{{ __('Action') }}</th>
+                                    <th class="text-left p-3 px-5">{{ __('Role') }}</th>
+
+									@can('edit-users')
+										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
+									@endcan
                                 </tr>
                                 
                                 @foreach ($users as $user)
@@ -30,22 +36,25 @@
                                         <td class="p-3 px-5">{{ $user->name }}</td>
                                         <td class="p-3 px-5">{{ $user->email }}</td>
                                         <td class="p-3 px-5">{{ $user->getRoleNames()[0] }}</td>
-                                        <td class="p-3 px-5 flex">
-                                            <a href="{{ route('users.edit', ['user' => $user]) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
-                                                text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                                {{ __('Edit') }}
-                                            </a>
 
-											<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
-												@csrf
-												@method('DELETE')
+										@can('edit-users')
+											<td class="p-3 px-5 flex">
+												<a href="{{ route('users.edit', ['user' => $user]) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
+													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+													{{ __('Edit') }}
+												</a>
 
-												<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
-													py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-													{{ __('Delete') }}
-												</button>
-											</form>
-                                        </td>
+												<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
+													@csrf
+													@method('DELETE')
+
+													<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
+														py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+														{{ __('Delete') }}
+													</button>
+												</form>
+											</td>
+										@endcan
                                     </tr>
                                 @endforeach
                             </tbody>

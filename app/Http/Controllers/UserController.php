@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Contracts\Permission;
 
 class UserController extends Controller
 {
@@ -34,6 +35,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
+		$this->authorize('create-users');
         $roles = Role::all();
 
         return view('users.create', [
@@ -49,6 +51,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request, UserService $userService): RedirectResponse
     {
+		$this->authorize('create-users');
+
         $user = $userService->createUser(
 			$request->name,
 			$request->email,
@@ -77,8 +81,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit(Request $request, User $user): View
+    public function edit(User $user): View
     {
+		$this->authorize('edit-users');
         $roles = Role::all();
 
 		return view('users.edit', [
@@ -96,6 +101,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user, UserService $userService)
     {
+		$this->authorize('edit-users');
+
         $userService->updateUser(
 			$user,
 			$request->name,
@@ -115,6 +122,8 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
+		$this->authorize('delete-users');
+		
         $user->delete();
 
 		return redirect()->route('users.list')
