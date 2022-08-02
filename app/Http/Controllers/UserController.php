@@ -7,10 +7,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Spatie\Permission\Contracts\Permission;
 
 class UserController extends Controller
 {
@@ -123,7 +121,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
 		$this->authorize('delete-users');
-		
+
         $user->delete();
 
 		return redirect()->route('users.list')
