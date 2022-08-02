@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Client\OrganizationController;
+use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('/', 'dashboard');
 
     Route::resource('users', UserController::class);
+	Route::resource('organizations', OrganizationController::class);
+	Route::resource('people', PersonController::class);
 });
 
 require __DIR__ . '/auth.php';
