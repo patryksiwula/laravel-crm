@@ -19,10 +19,10 @@
                         <table class="w-full text-md bg-white shadow-md rounded mb-4">
                             <tbody>
                                 <tr class="border-b">
-                                    <th class="text-left p-3 px-5">Name</th>
-                                    <th class="text-left p-3 px-5">Email</th>
-                                    <th class="text-left p-3 px-5">Role</th>   
-                                    <th class="text-left p-3 px-5">Action</th>
+                                    <th class="text-left p-3 px-5">{{ __('Name') }}</th>
+                                    <th class="text-left p-3 px-5">{{ __('Email') }}</th>
+                                    <th class="text-left p-3 px-5">{{ __('Role') }}</th>   
+                                    <th class="text-left p-3 px-5">{{ __('Action') }}</th>
                                 </tr>
                                 
                                 @foreach ($users as $user)
