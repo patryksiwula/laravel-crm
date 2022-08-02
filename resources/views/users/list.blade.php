@@ -35,10 +35,16 @@
                                                 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                                 {{ __('Edit') }}
                                             </a>
-                                            <button type="button" class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
-                                                py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                                {{ __('Delete') }}
-                                            </button>
+
+											<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
+												@csrf
+												@method('DELETE')
+
+												<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
+													py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+													{{ __('Delete') }}
+												</button>
+											</form>
                                         </td>
                                     </tr>
                                 @endforeach

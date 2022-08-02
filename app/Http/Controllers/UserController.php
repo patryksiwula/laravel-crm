@@ -57,7 +57,7 @@ class UserController extends Controller
 		);
 
 		return redirect()->route('users.index')
-			->withMessage('action', 'user_created');
+			->with('action', 'user_created');
     }
 
     /**
@@ -104,17 +104,20 @@ class UserController extends Controller
 		);
 
 		return redirect()->route('users.index')
-			->withMessage('action', 'user_updated');
+			->with('action', 'user_updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        $user->delete();
+
+		return redirect()->route('users.list')
+			->with('action', 'user_deleted');
     }
 }
