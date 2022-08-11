@@ -35,7 +35,7 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $user->name }}</td>
                                         <td class="p-3 px-5">{{ $user->email }}</td>
-                                        <td class="p-3 px-5">{{ $user->getRoleNames()[0] }}</td>
+                                        <td class="p-3 px-5">{{ $user->getRoleNames()->get(0) }}</td>
 
 										@can('edit-users')
 											<td class="p-3 px-5 flex">
