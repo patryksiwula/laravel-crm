@@ -14,10 +14,10 @@ class UserService
 	 * @param  string $name
 	 * @param  string $email
 	 * @param  string $password
-	 * @param  int $role
+	 * @param  array $roles
 	 * @return \App\Models\User
 	 */
-	public function createUser(string $name, string $email, string $password, int $role): User
+	public function createUser(string $name, string $email, string $password, array $roles): User
 	{
 		$user = User::create([
 			'name' => $name,
@@ -25,8 +25,8 @@ class UserService
 			'password' => Hash::make($password),
 		]);
 
-		Role::findById($role)->users()
-			->attach($user);
+		foreach ($roles as $role)
+			Role::findById($role)->users()->attach($user);
 
 		return $user;
 	}
@@ -37,17 +37,22 @@ class UserService
 	 * @param  \App\Models\User $user
 	 * @param  string $name
 	 * @param  string $email
-	 * @param  int $role
+	 * @param  array $roles
 	 * @return \App\Models\User
 	 */
-	public function updateUser(User $user, string $name, string $email, int $role): User
+	public function updateUser(User $user, string $name, string $email, array $roles): User
 	{
 		$user->update([
 			'name' => $name,
 			'email' => $email
 		]);
 
-		$user->syncRoles(Role::findById($role));
+		$newRoles = [];
+
+		foreach ($roles as $role)
+			array_push($newRoles, Role::findById($role));
+
+		$user->syncRoles($newRoles);
 
 		return $user;
 	}

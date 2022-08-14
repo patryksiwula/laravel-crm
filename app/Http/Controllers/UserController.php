@@ -55,7 +55,7 @@ class UserController extends Controller
 			$request->name,
 			$request->email,
 			$request->password,
-			$request->role
+			$request->roles
 		);
 
 		return redirect()->route('users.index')
@@ -105,7 +105,7 @@ class UserController extends Controller
 			$user,
 			$request->name,
 			$request->email,
-			$request->role
+			$request->roles
 		);
 
 		return redirect()->route('users.index')
