@@ -24,7 +24,7 @@
                                 <tr class="border-b">
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Email') }}</th>
-                                    <th class="text-left p-3 px-5">{{ __('Role') }}</th>
+                                    <th class="text-left p-3 px-5">{{ __('Roles') }}</th>
 
 									@can('edit-users')
 										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
@@ -35,7 +35,11 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $user->name }}</td>
                                         <td class="p-3 px-5">{{ $user->email }}</td>
-                                        <td class="p-3 px-5">{{ $user->getRoleNames()->get(0) }}</td>
+                                        <td class="p-3 px-5">
+											@foreach ($user->getRoleNames() as $role)
+												{{ $role }} <br>
+											@endforeach
+										</td>
 
 										@can('edit-users')
 											<td class="p-3 px-5 flex">
