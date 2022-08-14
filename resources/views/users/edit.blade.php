@@ -34,12 +34,12 @@
                         <label for="role" class="font-bold text-base text-black block mb-3">
                             {{ __('Role') }}
                         </label>
-                        <select name="role" class="w-full border-[1.5px] border-form-stroke rounded-lg py-3 px-5 font-medium text-body-color
+                        <select name="roles[]" multiple class="w-full border-[1.5px] border-form-stroke rounded-lg py-3 px-5 font-medium text-body-color
                             outline-none focus:border-primary active:border-primary transition disabled:bg-[#F5F7FD]
                             disabled:cursor-default appearance-none">
                             
                             @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" @selected($role->name == $user->getRoleNames()[0])>{{ __($role->name) }}</option>
+                                <option value="{{ $role->id }}" @selected($user->hasRole($role->name))>{{ __($role->name) }}</option>
                             @endforeach
                         </select>
                     </div>

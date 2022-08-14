@@ -33,7 +33,7 @@
                         <label for="password" class="font-bold text-base text-black block mb-3">
                             {{ __('Password') }}
                         </label>
-                        <input type="password" name="password" class="w-full border-[1.5px] border-form-stroke
+                        <input type="password" name="password" placeholder="{{ __('User password') }}" class="w-full border-[1.5px] border-form-stroke
                             rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
                     </div>
@@ -42,7 +42,7 @@
                         <label for="password_confirmation" class="font-bold text-base text-black block mb-3">
                             {{ __('Confirm password') }}
                         </label>
-                        <input type="password" name="password_confirmation" class="w-full border-[1.5px] border-form-stroke
+                        <input type="password" name="password_confirmation" placeholder="{{ __('Confirm user password') }}" class="w-full border-[1.5px] border-form-stroke
                             rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
                     </div>
@@ -51,7 +51,7 @@
                         <label for="role" class="font-bold text-base text-black block mb-3">
                             {{ __('Role') }}
                         </label>
-                        <select name="role" class="w-full border-[1.5px] border-form-stroke rounded-lg py-3 px-5 font-medium text-body-color
+                        <select name="roles[]" multiple class="w-full border-[1.5px] border-form-stroke rounded-lg py-3 px-5 font-medium text-body-color
                             outline-none focus:border-primary active:border-primary transition disabled:bg-[#F5F7FD]
                             disabled:cursor-default appearance-none">
                             
