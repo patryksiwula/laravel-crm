@@ -18,8 +18,8 @@ class OrganizationFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-			'email' => fake()->email(),
-			'phone' => fake()->e164PhoneNumber(),
+			'email' => fake()->unique()->safeEmail(),
+			'phone' => fake()->unique()->e164PhoneNumber(),
 			'address' => fake()->address(),
 			'vat' => fake()->numerify('##########')
         ];
