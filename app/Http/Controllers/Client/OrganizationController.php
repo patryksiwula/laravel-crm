@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateOrganizationRequest;
 use App\Models\Client\Organization;
 use App\Models\User;
+use App\Services\ClientService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class OrganizationController extends Controller
      */
     public function index(): View
     {
-        $organizations = Organization::paginate(10);
+        $organizations = Organization::paginate(20);
 
 		return view('clients.organizations.list', [
 			'organizations' => $organizations
@@ -59,24 +61,37 @@ class OrganizationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Organization  $organization
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Organization $organization): View
     {
-        //
+        $this->authorize('edit-clients');
+
+		return view('clients.organizations.edit', compact('organization'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateOrganizationRequest  $request
+     * @param  \App\Models\Client\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrganizationRequest $request, Organization $organization, ClientService $clientService)
     {
-        //
+        $this->authorize('edit-clients');
+		$clientService->updateOrganization(
+			$organization,
+			$request->validated('name'),
+			$request->validated('email'),
+			$request->validated('phone'),
+			$request->validated('address'),
+			$request->validated('vat')
+		);
+
+		return redirect()->route('organizations.index')
+			->with('action', 'organisation_updated');
     }
 
     /**
