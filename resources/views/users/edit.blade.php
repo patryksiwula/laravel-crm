@@ -3,7 +3,7 @@
 @section('content')
     <main class="min-h-screen w-full ml-60 bg-gray-200">
         <div class="w-full py-5 text-center bg-white shadow-sm">
-            <h1 class="text-xl font-bold">{{ __('Create user') }}</h1>
+            <h1 class="text-xl font-bold">{{ __('Edit user') }}</h1>
         </div>
 
         <div class="w-full h-full px-80 py-10 bg-gray-200">

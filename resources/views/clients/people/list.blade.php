@@ -9,9 +9,9 @@
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
 			@can('create-clients')
 				<div class="mb-6">
-					<a href="{{ route('users.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
+					<a href="{{ route('people.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
 						focus:outline-none focus:shadow-outline font-bold">
-						{{ __('Add organization') }} +
+						{{ __('Add person') }} +
 					</a>
 				</div>
 			@endcan
@@ -62,6 +62,7 @@
                             </tbody>
                         </table>
                     </div>
+					{{ $people->links() }}
                 </div>
             </div>
         </div>
