@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\UserController;
+use App\Models\Client\Organization;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +23,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::redirect('/', 'dashboard');
-
+	
     Route::resource('users', UserController::class);
-	Route::resource('organizations', OrganizationController::class);
-	Route::resource('people', PersonController::class);
+
+	Route::view('/organizations/create', 'clients.organizations.create')->name('organizations.create');
+	Route::resource('organizations', OrganizationController::class)->except(['create', 'show']);
+
+	Route::view('/people/create', 'clients.people.create')->name('people.create');
+	Route::resource('people', PersonController::class)->except(['create', 'show']);
 });
 
 require __DIR__ . '/auth.php';
