@@ -25,10 +25,10 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'string'],
 			'email' => ['required', 'string', 'email', 'max:255', Rule::unique('organizations')->ignore($this->organization)],
 			'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-			'address' => ['required'],
+			'address' => ['required', 'string'],
 			'vat' => ['required', 'numeric']
         ];
     }
