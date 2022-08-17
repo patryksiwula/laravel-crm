@@ -26,7 +26,7 @@ class UpdatePersonRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-			'email' => ['required', 'string', 'email', 'max:255', Rule::unique('people')->ignore($this->organization->id)],
+			'email' => ['required', 'string', 'email', 'max:255', Rule::unique('people')->ignore($this->person->id)],
 			'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
 			'address' => ['required']
         ];
