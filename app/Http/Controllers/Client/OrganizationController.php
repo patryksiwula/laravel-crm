@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use App\Models\Client\Organization;
-use App\Models\User;
 use App\Services\ClientService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class OrganizationController extends Controller
 {
@@ -21,41 +21,41 @@ class OrganizationController extends Controller
     {
         $organizations = Organization::paginate(20);
 
-		return view('clients.organizations.list', [
-			'organizations' => $organizations
-		]);
+		return view('clients.organizations.list', compact('organizations'));
     }
 
-    /**
+	/**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $this->authorize('create-clients');
+
+		return view('clients.organizations.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\StoreOrganizationRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreOrganizationRequest $request, ClientService $clientService): RedirectResponse
     {
-        //
-    }
+		$this->authorize('create-clients');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $clientService->createOrganisation(
+			$request->validated('name'),
+			$request->validated('email'),
+			$request->validated('phone'),
+			$request->validated('address'),
+			$request->validated('vat')
+		);
+
+		return redirect()->route('organizations.index')
+			->with('action', 'organization_created');
     }
 
     /**
@@ -76,9 +76,9 @@ class OrganizationController extends Controller
      *
      * @param  \App\Http\Requests\UpdateOrganizationRequest  $request
      * @param  \App\Models\Client\Organization  $organization
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateOrganizationRequest $request, Organization $organization, ClientService $clientService)
+    public function update(UpdateOrganizationRequest $request, Organization $organization, ClientService $clientService): RedirectResponse
     {
         $this->authorize('edit-clients');
 		$clientService->updateOrganization(
@@ -97,11 +97,15 @@ class OrganizationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Client\Organization  $organization
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Organization $organization): RedirectResponse
     {
-        //
+        $this->authorize('delete-clients');
+		$organization->delete();
+
+		return redirect()->route('organizations.index')
+			->with('action', 'organization_deleted');
     }
 }

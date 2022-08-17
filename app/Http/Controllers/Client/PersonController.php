@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Client\Person;
 use App\Services\ClientService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class PersonController extends Controller
 {
@@ -28,33 +29,34 @@ class PersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $this->authorize('create-clients');
+
+		return view('clients.people.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\StorePersonRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StorePersonRequest $request, ClientService $clientService): RedirectResponse
     {
-        //
-    }
+        $this->authorize('create-clients');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $clientService->createPerson(
+			$request->validated('name'),
+			$request->validated('email'),
+			$request->validated('phone'),
+			$request->validated('address')
+		);
+
+		return redirect()->route('people.index')
+			->with('action', 'person_created');
     }
 
     /**
@@ -63,7 +65,7 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function edit(Person $person)
+    public function edit(Person $person): View
     {
         $this->authorize('edit-clients');
 
@@ -75,9 +77,9 @@ class PersonController extends Controller
      *
      * @param  \App\Http\Requests\UpdatePersonRequest  $request
      * @param  \App\Models\Client\Person  $person
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdatePersonRequest $request, Person $person, ClientService $clientService)
+    public function update(UpdatePersonRequest $request, Person $person, ClientService $clientService): RedirectResponse
     {
         $this->authorize('edit-clients');
 		$clientService->updatePerson(
@@ -95,11 +97,15 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Client\Person  $person
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Person $person): RedirectResponse
     {
-        //
+        $this->authorize('delete-clients');
+		$person->delete();
+
+		return redirect()->route('people.index')
+			->with('action', 'person_deleted');
     }
 }
