@@ -26,11 +26,8 @@ Route::middleware(['auth'])->group(function () {
 	
     Route::resource('users', UserController::class);
 
-	Route::view('/organizations/create', 'clients.organizations.create')->name('organizations.create');
-	Route::resource('organizations', OrganizationController::class)->except(['create', 'show']);
-
-	Route::view('/people/create', 'clients.people.create')->name('people.create');
-	Route::resource('people', PersonController::class)->except(['create', 'show']);
+	Route::resource('organizations', OrganizationController::class)->except('show');
+	Route::resource('people', PersonController::class)->except('show');
 });
 
 require __DIR__ . '/auth.php';
