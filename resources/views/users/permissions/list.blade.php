@@ -23,12 +23,19 @@
                             <tbody>
                                 <tr class="border-b">
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
+									<th class="text-left p-3 px-5">{{ __('Assigned to roles') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Action') }}</th>
                                 </tr>
                                 
                                 @foreach ($permissions as $permission)
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $permission->name }}</td>
+										<td class="p-3 px-5">
+											@forelse ($permission->roles->pluck('name') as $role)
+												{{ $role }}
+											@empty
+												{{ '-----' }}
+											@endforelse
 
 										@can('edit-users')
 											<td class="p-3 px-5 flex">
