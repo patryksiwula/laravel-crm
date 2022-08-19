@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Models\Client\Organization;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
 	
     Route::resource('users', UserController::class);
 	Route::resource('roles', RoleController::class)->except('show');
+	Route::resource('permissions', PermissionController::class)->except('show');
 	Route::resource('organizations', OrganizationController::class)->except('show');
 	Route::resource('people', PersonController::class)->except('show');
 });
