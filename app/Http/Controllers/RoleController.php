@@ -19,7 +19,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::with('permissions')->get();
+        $roles = Role::with(['permissions' => function ($query) {
+			$query->select('name');
+		}])->get();
 
 		return view('users.roles.list', compact('roles'));
     }
