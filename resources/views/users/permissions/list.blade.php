@@ -24,7 +24,10 @@
                                 <tr class="border-b">
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Assigned to roles') }}</th>
-                                    <th class="text-left p-3 px-5">{{ __('Action') }}</th>
+
+									@canany(['edit-users', 'delete-users'])
+										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
+									@endcanany
                                 </tr>
                                 
                                 @foreach ($permissions as $permission)
@@ -36,25 +39,30 @@
 											@empty
 												{{ '-----' }}
 											@endforelse
+										</td>
 
-										@can('edit-users')
+										@canany(['edit-users', 'delete-users'])
 											<td class="p-3 px-5 flex">
-												<a href="{{ route('permissions.edit', compact('permission')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
-													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-													{{ __('Edit') }}
-												</a>
+												@can('edit-users')
+													<a href="{{ route('permissions.edit', compact('permission')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
+														text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+														{{ __('Edit') }}
+													</a>
+												@endcan
+												
+												@can('delete-users')
+													<form action="{{ route('permissions.destroy', compact('permission')) }}" method="POST">
+														@csrf
+														@method('DELETE')
 
-												<form action="{{ route('permissions.destroy', compact('permission')) }}" method="POST">
-													@csrf
-													@method('DELETE')
-
-													<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
-														py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-														{{ __('Delete') }}
-													</button>
-												</form>
+														<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
+															py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+															{{ __('Delete') }}
+														</button>
+													</form>
+												@endcan
 											</td>
-										@endcan
+										@endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

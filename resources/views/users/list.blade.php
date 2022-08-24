@@ -26,9 +26,9 @@
                                     <th class="text-left p-3 px-5">{{ __('Email') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Roles') }}</th>
 
-									@can('edit-users')
+									@canany(['update-users', 'delete-users'])
 										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
-									@endcan
+									@endif
                                 </tr>
                                 
                                 @foreach ($users as $user)
@@ -41,13 +41,16 @@
 											@endforeach
 										</td>
 
-										@can('edit-users')
+										@canany(['update-users', 'delete-users'])
 											<td class="p-3 px-5 flex">
-												<a href="{{ route('users.edit', ['user' => $user]) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
-													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-													{{ __('Edit') }}
-												</a>
-
+												@can('edit-users')
+													<a href="{{ route('users.edit', ['user' => $user]) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
+														text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+														{{ __('Edit') }}
+													</a>
+												@endcan
+												
+												@can('delete-users')
 												<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
 													@csrf
 													@method('DELETE')
@@ -57,8 +60,9 @@
 														{{ __('Delete') }}
 													</button>
 												</form>
+												@endcan
 											</td>
-										@endcan
+										@endcanany
                                     </tr>
                                 @endforeach
                             </tbody>
