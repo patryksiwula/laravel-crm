@@ -27,16 +27,14 @@
                         </label>
                         <textarea placeholder="{{ __('Product description') }}" name="description" class="w-full border-[1.5px] border-form-stroke
                             rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
-                            active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
-							{{ $product->description }}
-						</textarea>
+                            active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">{{ $product->description }}</textarea>
                     </div>
 
 					<div class="mt-8">
 						<label for="price" class="font-bold text-base text-black block mb-3">
                             {{ __('Price') }}
                         </label>
-                        <input type="number" placeholder="{{ __('Price per unit') }}" name="price" value="{{ $product->price }}" class="w-full border-[1.5px] border-form-stroke
+                        <input type="number" step=".01" placeholder="{{ __('Price per unit') }}" name="price" value="{{ $product->price }}" class="w-full border-[1.5px] border-form-stroke
                             rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
 					</div>
