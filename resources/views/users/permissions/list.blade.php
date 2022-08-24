@@ -32,7 +32,7 @@
                                         <td class="p-3 px-5">{{ $permission->name }}</td>
 										<td class="p-3 px-5">
 											@forelse ($permission->roles->pluck('name') as $role)
-												{{ $role }}
+												{{ $role }} <br>
 											@empty
 												{{ '-----' }}
 											@endforelse
