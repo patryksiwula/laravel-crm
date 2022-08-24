@@ -36,7 +36,7 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $product->id }}</td>
 										<td class="p-3 px-5">{{ $product->name }}</td>
-										<td class="p-3 px-5">{{ $product->price }}</td>
+										<td class="p-3 px-5">{{ number_format($product->price, 2) }}</td>
 										<td class="p-3 px-5">{{ $product->quantity }}</td>
 
 										@canany(['edit-products', 'delete-products'])
