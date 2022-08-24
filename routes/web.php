@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('permissions', PermissionController::class)->except('show');
 	Route::resource('organizations', OrganizationController::class)->except('show');
 	Route::resource('people', PersonController::class)->except('show');
+
+	Route::view('products/create', 'products.create')->name('products.create');
+	Route::resource('products', ProductController::class)->except(['show', 'create']);
 });
 
 require __DIR__ . '/auth.php';
