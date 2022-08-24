@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -34,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::view('products/create', 'products.create')->name('products.create');
 	Route::resource('products', ProductController::class)->except(['show', 'create']);
+	
+	Route::view('invoices/create', 'invoices.create')->name('invoices.create');
+	Route::resource('invoices', InvoiceController::class)->except(['show', 'create']);
 });
 
 require __DIR__ . '/auth.php';
