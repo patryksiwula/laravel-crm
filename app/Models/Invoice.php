@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Invoice extends Model
 {
@@ -15,6 +18,30 @@ class Invoice extends Model
 		'sale_date',
 		'due_date',
 		'payment_method',
+		'client_type',
+		'client_id',
 		'user_id'
 	];
+
+	public function user(): BelongsTo
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	public function client(): MorphTo
+	{
+		return $this->morphTo();
+	}
+
+	public function products(): BelongsToMany
+	{
+		return $this->belongsToMany(Product::class)
+			->withPivot('quantity')
+			->withTimestamps();
+	}
+
+	public function addItem(Product $product, int $quantity): void
+	{
+		$this->products()->attach($product, ['quantity' => $quantity]);
+	}
 }
