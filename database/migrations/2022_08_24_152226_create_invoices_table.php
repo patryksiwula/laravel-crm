@@ -22,7 +22,7 @@ return new class extends Migration
 
 			$table->enum('payment_method', [
 				'cash','bank transfer', 'credit card'
-			]);
+			])->default('cash');
 
 			$table->foreignId('user_id')->nullable()
 				->constrained()
