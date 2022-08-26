@@ -22,11 +22,13 @@
                         <table class="w-full text-md bg-white shadow-md rounded mb-4">
                             <tbody>
                                 <tr class="border-b">
+									<th>{{ __('No.') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Invoice no.') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Invoice date') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Sale date') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Due date') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Payment method') }}</th>
+									<th class="text-left p-3 px-5">{{ __('Client') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Created by') }}</th>
 
 									@canany(['edit-invoices', 'delete-invoices'])
@@ -34,17 +36,47 @@
 									@endcanany
                                 </tr>
                                 
-                                @foreach ($invoices as $invoice)
+                                @foreach ($invoices as $key => $invoice)
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
+										<td class="p-3 px-5">{{ $key + 1 }} </td>
                                         <td class="p-3 px-5">{{ $invoice->invoice_number }}</td>
 										<td class="p-3 px-5">{{ $invoice->invoice_date }}</td>
 										<td class="p-3 px-5">{{ $invoice->sale_date }}</td>
 										<td class="p-3 px-5">{{ $invoice->due_date }}</td>
 										<td class="p-3 px-5">{{ $invoice->payment_method }}</td>
-										<td class="p-3 px-5">{{ $invoice->user_id }}</td>
+										<td class="p-3 px-5">
+											@can('edit-clients')
+												@switch($invoice->client_type)
+													@case('App\Models\Client\Organization')
+														<a href="{{ route('organizations.edit', ['organization' => $invoice->client]) }}">
+															{{ $invoice->client->name }}
+														</a>
+														@break
+													
+													@case('App\Models\Client\Person')
+														<a href="{{ route('people.edit', ['person' => $invoice->client]) }}">
+															{{ $invoice->client->name }}
+														</a>
+														@break
+												@endswitch
+											@else
+												{{ $invoice->client->name }}
+											@endcan
+										</td>
+										<td class="p-3 px-5">
+											@can('edit-users')
+												<a href="{{ route('users.edit', ['user' => $invoice->user]) }}">{{ $invoice->user->name }}</a>
+											@else
+												{{ $invoice->user->name }}
+											@endcan
+										</td>
 
 										@canany(['edit-invoices', 'delete-invoices'])
 											<td class="p-3 px-5 flex">
+												<a href="#" class="mr-1 text-sm bg-gray-500 hover:bg-gray-700 
+													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+													{{ __('PDF') }}
+												</a>
 												@can('edit-invoices')
 													<a href="{{ route('invoices.edit', compact('invoice')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
 														text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
