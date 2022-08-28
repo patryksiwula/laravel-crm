@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Response;
 
 class InvoiceController extends Controller
 {
@@ -68,4 +70,12 @@ class InvoiceController extends Controller
 		return redirect()->route('invoices.index')
 			->with('action', 'invoice_deleted');
     }
+
+	public function download(Invoice $invoice): Response
+	{
+		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
+		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
+
+		return $pdf->download($fileName);
+	}
 }
