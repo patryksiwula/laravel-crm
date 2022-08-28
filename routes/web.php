@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::view('/products/create', 'products.create')->name('products.create');
 	Route::resource('products', ProductController::class)->except(['show', 'create']);
 	
+	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
 	Route::view('/invoices/create', 'invoices.create')->name('invoices.create');
 	Route::resource('invoices', InvoiceController::class)->except(['create', 'store']);
 });
