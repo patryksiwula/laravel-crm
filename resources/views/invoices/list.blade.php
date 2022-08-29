@@ -32,7 +32,7 @@
 									<th class="text-left p-3 px-5">{{ __('Created by') }}</th>
 
 									@canany(['edit-invoices', 'delete-invoices'])
-										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
+										<th class="text-center p-3 px-5">{{ __('Action') }}</th>
 									@endcanany
                                 </tr>
                                 
@@ -73,10 +73,20 @@
 
 										@canany(['edit-invoices', 'delete-invoices'])
 											<td class="p-3 px-5 flex">
-												<a href="#" class="mr-1 text-sm bg-gray-500 hover:bg-gray-700 
+												<a href="{{ route('invoices.download', compact('invoice')) }}" class="mr-1 text-sm bg-gray-500 hover:bg-gray-700 
 													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 													{{ __('PDF') }}
+
+
 												</a>
+												<form action="{{ route('invoices.send', compact('invoice')) }}" method="POST">
+													@csrf
+
+													<button class="mr-1 text-sm bg-indigo-500 hover:bg-indigo-700 
+													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+														{{ __('Send to client') }}
+													</button>
+												</form>
 												@can('edit-invoices')
 													<a href="{{ route('invoices.edit', compact('invoice')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
 														text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
