@@ -30,10 +30,7 @@
 									<th class="text-left p-3 px-5">{{ __('Payment method') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Client') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Created by') }}</th>
-
-									@canany(['edit-invoices', 'delete-invoices'])
-										<th class="text-center p-3 px-5">{{ __('Action') }}</th>
-									@endcanany
+									<th class="text-center p-3 px-5">{{ __('Action') }}</th>
                                 </tr>
                                 
                                 @foreach ($invoices as $key => $invoice)
