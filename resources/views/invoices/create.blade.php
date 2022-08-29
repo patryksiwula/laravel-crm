@@ -10,7 +10,7 @@
             <div class="w-full bg-white p-8 shadow-md">
 				<h2 class="text-2xl font-semibold">{{ __('Invoice details') }}</h2>
 			
-				<livewire:dynamic-invoice />
+				<livewire:dynamic-invoice-create />
 			</div>
 			
         </div>
