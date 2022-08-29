@@ -97,7 +97,11 @@ class DynamicInvoiceUpdate extends DynamicInvoice
 	public function updateInvoiceProducts(Invoice $invoice): void
 	{
 		// Validate product fields
-		$this->validate(['invoiceItems.*.quantity' => ['required', 'numeric', 'min:1']]);
+		$this->validate([
+			'invoiceItems.*.product_id' => ['required', 'numeric', 'min:1'],
+			'invoiceItems.*.quantity' => ['required', 'numeric', 'min:1']
+		]);
+		
 		$invoice->syncItems($this->invoiceItems);
 	}
 }

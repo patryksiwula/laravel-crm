@@ -96,7 +96,10 @@ class DynamicInvoiceCreate extends DynamicInvoice
 	public function addProductsToInvoice(Invoice $invoice): void
 	{
 		// Validate product fields
-		$this->validate(['invoiceItems.*.quantity' => ['required', 'numeric', 'min:1']]);
+		$this->validate([
+			'invoiceItems.*.product_id' => ['required', 'numeric', 'min:1'],
+			'invoiceItems.*.quantity' => ['required', 'numeric', 'min:1']
+		]);
 
 		// Add products to invoice
 		foreach ($this->invoiceItems as $item) {
