@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('products', ProductController::class)->except(['show', 'create']);
 	
 	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
+	Route::post('/invoices/{invoice}/send', [InvoiceController::class, 'send'])->name('invoices.send');
 	Route::view('/invoices/create', 'invoices.create')->name('invoices.create');
 	Route::resource('invoices', InvoiceController::class)->except(['create', 'store']);
 });
