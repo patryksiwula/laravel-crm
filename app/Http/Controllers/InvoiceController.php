@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceMail;
 use App\Models\Invoice;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -22,26 +26,21 @@ class InvoiceController extends Controller
 		return view('invoices.list', compact('invoices'));
     }
 
-	/**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Invoice  $$invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Invoice $invoice)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(Invoice $invoice)
+    public function edit(Invoice $invoice): View
     {
-        //
+		$this->authorize('edit-invoices');
+		$products = $invoice->products();
+
+		return view('invoices.edit', [
+			'invoiceId' => $invoice->id,
+			'products' => $products
+		]);
     }
 
     /**
@@ -60,9 +59,9 @@ class InvoiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(Invoice $invoice): RedirectResponse
     {
         $this->authorize('delete-invoices');
 		$invoice->delete();
@@ -77,5 +76,18 @@ class InvoiceController extends Controller
 		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
 
 		return $pdf->download($fileName);
+	}
+
+	public function send(Invoice $invoice): RedirectResponse
+	{
+		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
+		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
+		$pdfContent = $pdf->download()->getOriginalContent();
+
+		Storage::put('public/invoices/' . $fileName, $pdfContent);
+		Mail::to($invoice->client->email)->send(new InvoiceMail('public/invoices/' . $fileName, $fileName));
+
+		return redirect()->route('invoices.index')
+			->with('action', 'invoice_sent');
 	}
 }
