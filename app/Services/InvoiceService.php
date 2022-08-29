@@ -21,6 +21,21 @@ class InvoiceService
 
 		return $invoice;
 	}
+
+	/**
+	 * Update selected invoice
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @param  array $attributes
+	 * @return \App\Models\Invoice
+	 */
+	public function updateInvoice(Invoice $invoice, array $attributes): Invoice
+	{
+		$invoice->update($attributes);
+
+		return $invoice;
+	}
+
 	/**
 	 * Generate invoice number for a new invoice
 	 *
