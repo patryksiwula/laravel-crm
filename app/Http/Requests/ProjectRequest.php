@@ -27,7 +27,7 @@ class ProjectRequest extends FormRequest
             'name' => ['required', 'string'],
 			'description' => ['string', 'nullable'],
 			'deadline' => ['required', 'date'],
-			'user_id' => ['required', 'numeric', 'min:1'],
+			'user_id' => ['nullable', 'numeric', 'min:1'],
 			'model_id' => ['required', 'numeric', 'min:1'],
 			'model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person']
         ];
