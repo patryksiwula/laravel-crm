@@ -22,7 +22,7 @@
                         <table class="w-full text-md bg-white shadow-md rounded mb-4">
                             <tbody>
                                 <tr class="border-b">
-									<th class="text-left p-3 px-5">{{ __('ID') }}</th>
+									<th class="text-left p-3 px-5">{{ __('No.') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Status') }}</th>
                                     <th class="text-left p-3 px-5">{{ __('Deadline') }}</th>
@@ -34,9 +34,9 @@
 									@endcanany
                                 </tr>
                                 
-                                @foreach ($projects as $project)
+                                @foreach ($projects as $key => $project)
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
-                                        <td class="p-3 px-5">{{ $project->id }}</td>
+                                        <td class="p-3 px-5">{{ $key + 1 }}</td>
 										<td class="p-3 px-5">{{ $project->name }}</td>
 										<td class="p-3 px-5">{{ $project->status }}</td>
 										<td class="p-3 px-5">{{ $project->deadline }}</td>
