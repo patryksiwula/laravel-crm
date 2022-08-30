@@ -23,7 +23,12 @@ return new class extends Migration
 			])->default('pending');
 
 			$table->date('deadline');
-			$table->foreignId('user_id');
+
+			$table->foreignId('user_id')->nullable()
+				->constrained()
+				->cascadeOnUpdate()
+				->nullOnDelete();
+
 			$table->morphs('client');
             $table->timestamps();
         });
