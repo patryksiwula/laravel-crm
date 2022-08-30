@@ -56,25 +56,25 @@
 										<td class="p-3 px-5">{{ $project->deadline }}</td>
 										<td class="p-3 px-5">
 											@can('edit-users')
-												<a href="{{ route('users.edit', ['user' => $project->user_id]) }}">
-													{{ \App\Models\User::find($project->user_id)->name }}
+												<a href="{{ route('users.edit', ['user' => $project->user]) }}">
+													{{ $project->user->name }}
 												</a>
 											@else
-												{{ \App\Models\User::find($project->user_id)->name }}
+												{{ $project->user->name }}
 											@endcan
 										</td>
-
+										
 										<td class="p-3 px-5">
 											@can('edit-clients')
-												@if ($project->client_type === 'App\Models\Client\Organization')
-													<a href="{{ route('organizations.edit', ['organization' => $project->client_id]) }}">
-												@elseif ($project->client_type === 'App\Models\Client\Person')
-													<a href="{{ route('people.edit', ['person' => $project->client_id]) }}">
+												@if ($project->client::class === 'App\Models\Client\Organization')
+													<a href="{{ route('organizations.edit', ['organization' => $project->client]) }}">
+												@elseif ($project->client::class === 'App\Models\Client\Person')
+													<a href="{{ route('people.edit', ['person' => $project->client]) }}">
 												@endif
-														{{ $project->client_type::find($project->client_id)->name }}
+														{{ $project->client->name }}
 													</a>
 											@else
-												{{ $project->client_type::find($project->client_id)->name }}
+												{{ $project->client->name }}
 											@endcan
 										</td>
 
