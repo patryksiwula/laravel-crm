@@ -55,7 +55,7 @@
 
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
 						<livewire:select-client-type :clientTypes="[\App\Models\Client\Organization::class, \App\Models\Client\Person::class]" />
-						<livewire:search-model :namespace="'\\App\Models\Client\\'" />
+						<livewire:search-model :namespace="'App\Models\Client\\'" />
 					</div>
 
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
