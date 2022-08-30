@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Services\ProjectService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -40,27 +41,16 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\ProjectRequest  $request
-     * @return \Illuminate\Http\Response
+	 * @param  \App\Services\ProjectService $projectService
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProjectRequest $request, ProjectService $projectService)
+    public function store(ProjectRequest $request, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('create-projects');
-		//dd($request->validated());
 		$projectService->createProject($request->validated());
 
 		return redirect()->route('projects.index')
 			->with('action', 'project_created');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Project $project)
-    {
-        //
     }
 
     /**
@@ -90,10 +80,14 @@ class ProjectController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project): RedirectResponse
     {
-        //
+        $this->authorize('delete-projects');
+		$project->delete();
+
+		return redirect()->route('projects.index')
+			->with('action', 'project_deleted');
     }
 }
