@@ -43,7 +43,7 @@
 										<td class="p-3 px-5">{{ $invoice->payment_method }}</td>
 										<td class="p-3 px-5">
 											@can('edit-clients')
-												@switch($invoice->client_type)
+												@switch($invoice->client::class)
 													@case('App\Models\Client\Organization')
 														<a href="{{ route('organizations.edit', ['organization' => $invoice->client]) }}">
 															{{ $invoice->client->name }}
