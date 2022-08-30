@@ -38,7 +38,21 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $key + 1 }}</td>
 										<td class="p-3 px-5">{{ $project->name }}</td>
-										<td class="p-3 px-5">{{ $project->status }}</td>
+										<td class="p-3 px-5">
+											@switch($project->status)
+												@case('pending')
+													<x-badge :color="'slate'">{{ __(ucfirst($project->status)) }}</x-badge>
+													@break
+												
+												@case('in progress')
+													<x-badge :color="'orange'">{{ __(ucfirst($project->status)) }}</x-badge>
+													@break
+												
+												@case('done')
+													<x-badge :color="'green'">{{ __(ucfirst($project->status)) }}</x-badge>
+													@break;
+											@endswitch
+										</td>
 										<td class="p-3 px-5">{{ $project->deadline }}</td>
 										<td class="p-3 px-5">
 											@can('edit-users')
