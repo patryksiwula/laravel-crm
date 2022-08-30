@@ -2,10 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Client\Organization;
-use App\Models\Client\Person;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Redirector;
 
@@ -37,18 +36,15 @@ class DynamicInvoiceUpdate extends DynamicInvoice
 		}
 	}
 
-    public function render()
+	/**
+     * Render Livewire component
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function render(): View
     {
-		switch ($this->client_type)
-		{
-			case 'Organization':
-				$this->clients = Organization::all();
-				break;
-			
-			case 'Person':
-				$this->clients = Person::all();
-				break;
-		}
+		$clientModel = '\\App\Models\Client\\' . $this->client_type;
+		$this->clients = $clientModel::select(['id', 'name'])->get();
 
         return view('livewire.dynamic-invoice-update');
     }

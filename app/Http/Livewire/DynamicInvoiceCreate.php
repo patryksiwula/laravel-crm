@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Client\Organization;
-use App\Models\Client\Person;
 use App\Models\Invoice;
 use App\Models\Product;
 use App\Services\InvoiceService;
@@ -39,16 +37,8 @@ class DynamicInvoiceCreate extends DynamicInvoice
      */
     public function render(): View
     {
-		switch ($this->client_type)
-		{
-			case 'Organization':
-				$this->clients = Organization::all();
-				break;
-			
-			case 'Person':
-				$this->clients = Person::all();
-				break;
-		}
+		$clientModel = '\\App\Models\Client\\' . $this->client_type;
+		$this->clients = $clientModel::select(['id', 'name'])->get();
 
         return view('livewire.dynamic-invoice-create');
     }

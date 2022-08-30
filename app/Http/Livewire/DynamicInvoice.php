@@ -23,7 +23,7 @@ class DynamicInvoice extends Component
 	public string $sale_date;
 	public string $due_date;
 	public string $payment_method;
-	public string $client_type;
+	public string $clientType;
 	public int $client_id;
 	public int $user_id;
 
@@ -37,9 +37,9 @@ class DynamicInvoice extends Component
 		'sale_date' => ['required', 'date'],
 		'due_date' => ['required', 'date'],
 		'payment_method' => ['in:cash,bank transfer,credit card'],
-		'client_type' => ['required', 'string'],
+		'client_type' => ['required', 'string', 'in:Organization,Person'],
 		'client_id' => ['required', 'numeric', 'min:1'],
-		'user_id' => ['required', 'numeric']
+		'user_id' => ['required', 'numeric', 'min:1']
 	];
 
 	/**
@@ -51,7 +51,7 @@ class DynamicInvoice extends Component
 	{
 		$this->user_id = Auth::user()->id;
 		$this->inputs = new Collection();
-		$this->productsAvailable = Product::all();
+		$this->productsAvailable = Product::select(['id', 'name'])->get();
 		$this->invoiceItems = new Collection();
 		$this->clients = new Collection();
 	}
