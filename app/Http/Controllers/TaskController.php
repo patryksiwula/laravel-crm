@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use App\Models\User;
+use App\Services\TaskService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -23,22 +27,29 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): View
     {
-        //
+		$this->authorize('create-tasks');
+        $users = User::select(['id', 'name'])->get();
+		
+		return view('tasks.create', compact('users'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\TaskRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request, TaskService $taskService): RedirectResponse
     {
-        //
+		$this->authorize('create-tasks');
+        $taskService->createTask($request->validated());
+
+		return redirect()->route('tasks.index')
+			->with('action', 'task_created');
     }
 
     /**
@@ -56,11 +67,14 @@ class TaskController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(Task $task)
+    public function edit(Task $task): View
     {
-        //
+		$this->authorize('edit-tasks');
+        $users = User::select(['id', 'name'])->get();
+
+		return view('tasks.edit', compact('task', 'users'));
     }
 
     /**
