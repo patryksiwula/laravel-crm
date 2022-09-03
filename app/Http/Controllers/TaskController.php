@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskRequest;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\TaskService;
@@ -15,11 +16,18 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
+	 * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $tasks = Task::with(['user', 'project'])->paginate(15);
+		if ($request->status === null)
+        	$tasks = Task::with(['user', 'project'])->paginate(15);
+		else
+		{
+			$tasks = Task::with(['user', 'project'])->where('status', '=', $request->status)
+				->paginate(15);
+		}
 
 		return view('tasks.list', compact('tasks'));
     }
@@ -40,10 +48,10 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\TaskRequest  $request
+     * @param  \App\Http\Requests\StoreTaskRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TaskRequest $request, TaskService $taskService): RedirectResponse
+    public function store(StoreTaskRequest $request, TaskService $taskService): RedirectResponse
     {
 		$this->authorize('create-tasks');
         $taskService->createTask($request->validated());
@@ -80,23 +88,31 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateTaskRequest  $request
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task, TaskService $taskService): RedirectResponse
     {
-        //
+        $this->authorize('edit-tasks');
+        $taskService->updateTask($task, $request->validated());
+
+		return redirect()->route('tasks.index')
+			->with('action', 'task_updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task): RedirectResponse
     {
-        //
+        $this->authorize('delete-tasks');
+		$task->delete();
+
+		return redirect()->route('tasks.index')
+			->with('action', 'task_deleted');
     }
 }
