@@ -20,4 +20,19 @@ class TaskService
 
 		return Task::create($attributes);
 	}
+	
+	/**
+	 * Update selected task
+	 *
+	 * @param  \App\Models\Task $task
+	 * @param  array $attributes
+	 * @return \App\Models\Task
+	 */
+	public function updateTask(Task $task, array $attributes): bool
+	{
+		$attributes['project_id'] = $attributes['model_id'];
+		unset($attributes['model_id']);
+
+		return $task->update($attributes);
+	}
 }
