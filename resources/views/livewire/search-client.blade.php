@@ -1,0 +1,1 @@
+@extends('livewire.search-model')
