@@ -23,10 +23,15 @@ class SearchModel extends Component
 		else
 			$this->model = '';
 
-		$this->modelSearch = '';
+		if (empty($this->modelSearch))
+			$this->modelSearch = '';
+			
 		$this->showDropdown = false;
 		$this->modelSelected = null;
-		$this->model_id = 0;
+
+		if (empty($this->model_id) || $this->model_id === 0)
+			$this->model_id = 0;
+
 		$this->model_type = $this->model;
 	}
 
