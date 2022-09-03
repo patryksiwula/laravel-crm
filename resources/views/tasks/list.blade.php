@@ -38,19 +38,21 @@
                                         <td class="p-3 px-5">{{ $key + 1 }}</td>
 										<td class="p-3 px-5">{{ $task->name }}</td>
 										<td class="p-3 px-5">
-											@switch($task->status)
-												@case('pending')
-													<x-badge :color="'slate'">{{ __(ucfirst($task->status)) }}</x-badge>
-													@break
-												
-												@case('in progress')
-													<x-badge :color="'orange'">{{ __(ucfirst($task->status)) }}</x-badge>
-													@break
-												
-												@case('done')
-													<x-badge :color="'green'">{{ __(ucfirst($task->status)) }}</x-badge>
-													@break;
-											@endswitch
+											<a href="{{ route('tasks.index') }}?status={{ $task->status }}">
+												@switch($task->status)
+													@case('pending')
+														<x-badge :color="'slate'">{{ __(ucfirst($task->status)) }}</x-badge>
+														@break
+													
+													@case('in progress')
+														<x-badge :color="'orange'">{{ __(ucfirst($task->status)) }}</x-badge>
+														@break
+													
+													@case('done')
+														<x-badge :color="'green'">{{ __(ucfirst($task->status)) }}</x-badge>
+														@break;
+												@endswitch
+											</a>
 										</td>
 										<td class="p-3 px-5">
 											@can('edit-users')
