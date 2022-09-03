@@ -15,11 +15,18 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
+	 * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $projects = Project::with(['user', 'client'])->paginate(15);
+		if ($request->status === null)
+        	$projects = Project::with(['user', 'client'])->paginate(15);
+		else
+		{
+			$projects = Project::with(['user', 'client'])->where('status', '=', $request->status)
+				->paginate(15);
+		}
 
 		return view('projects.list', compact('projects'));
     }
