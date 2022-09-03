@@ -8,20 +8,21 @@ use Livewire\Component;
 class SearchModel extends Component
 {
 	public string $namespace;
-	public string $model;
+	public string|null $modelPassed;
+	public string|null $model;
 	public string $modelSearch;
-	public string $client_type;
 	public bool $showDropdown;
 	public mixed $modelSelected;
 	public int $model_id;
-	public string $model_type;
-
-	protected $listeners = ['clientTypeSelected'];
+	public string|null $model_type;
 
 	public function mount(): void
 	{
-		$this->client_type = 'Organization';
-		$this->model = $this->namespace . $this->client_type;
+		if (!empty($this->modelPassed) && $this->modelPassed !== null)
+			$this->model = $this->namespace . $this->modelPassed;
+		else
+			$this->model = '';
+
 		$this->modelSearch = '';
 		$this->showDropdown = false;
 		$this->modelSelected = null;
@@ -33,20 +34,13 @@ class SearchModel extends Component
     {
 		$models = new Collection();
 
-		if (!empty($this->modelSearch))
+		if (!empty($this->modelSearch) && !empty($this->model))
 			$models = $this->model::where('name', 'like', '%' . $this->modelSearch . '%')->get(['id', 'name']);
 
 		$this->showDropdown = (!empty($this->modelSearch) && $models->isNotEmpty()) ? true : false;
 
         return view('livewire.search-model', compact('models'));
     }
-
-	public function clientTypeSelected(string $type): void
-	{
-		$this->client_type = $type;
-		$this->model = 'App\Models\Client\\' . $type;
-		$this->model_type = $this->model;
-	}
 
 	public function setModel(int $modelId): void
 	{
