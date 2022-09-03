@@ -1,5 +1,13 @@
 <div>
-	<label for="modelSearch" class="font-bold text-base text-black block mb-3">{{ 'Client' }}</label>
+	<label for="modelSearch" class="font-bold text-base text-black block mb-3">
+		@if (isset($modelPassed) && !empty($modelPassed))
+			{{ $modelPassed }}
+		@else
+			@if (isset($modelName) && !empty($modelName))
+				{{ $modelName }}
+			@endif
+		@endif
+	</label>
 
 	<div x-data="{ open: false, selectedModel: @entangle('modelSelected') }" class="relative">
 		<input type="text" name="modelSearch" id="model-search" wire:model="modelSearch" class="relative w-full border-[1.5px] border-form-stroke
