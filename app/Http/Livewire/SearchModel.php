@@ -15,24 +15,30 @@ class SearchModel extends Component
 	public mixed $modelSelected;
 	public int $model_id;
 	public string|null $model_type;
+	public bool $multiple;
+	public int $count;
 
 	public function mount(): void
 	{
-		if (!empty($this->modelPassed) && $this->modelPassed !== null)
-			$this->model = $this->namespace . $this->modelPassed;
-		else
-			$this->model = '';
+		if (empty($this->namespace))
+			$this->namespace = 'App\Models\\';
+			
+		$this->model = (empty($this->modelPassed) || $this->modelPassed === null) ? '' : $this->namespace . $this->modelPassed;
+		$this->showDropdown = false;
+		$this->modelSelected = null;
+		$this->model_type = $this->model;
 
 		if (empty($this->modelSearch))
 			$this->modelSearch = '';
-			
-		$this->showDropdown = false;
-		$this->modelSelected = null;
 
-		if (empty($this->model_id) || $this->model_id === 0)
+		if (empty($this->model_id))
 			$this->model_id = 0;
 
-		$this->model_type = $this->model;
+		if (empty($this->multiple))
+			$this->multiple = false;
+
+		if (empty($this->count))
+			$this->count = 0;
 	}
 
     public function render()
