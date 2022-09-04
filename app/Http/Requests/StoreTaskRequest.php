@@ -26,8 +26,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
 			'description' => ['nullable', 'string'],
-			'user_id' => ['nullable', 'numeric', 'min:1'],
-			'model_id' => ['required', 'numeric', 'min:1']
+			'search.*.model_id' => ['required', 'numeric', 'min:1']
         ];
     }
 }

@@ -27,9 +27,8 @@ class UpdateProjectRequest extends FormRequest
             'name' => ['required', 'string'],
 			'description' => ['string', 'nullable'],
 			'deadline' => ['required', 'date'],
-			'user_id' => ['nullable', 'numeric', 'min:1'],
-			'model_id' => ['required', 'numeric', 'min:1'],
-			'model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person'],
+			'search.*.model_id' => ['required', 'numeric', 'min:1'],
+			'search.1.model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person'],
 			'status' => ['required', 'string', 'in:pending,in progress,done']
         ];
     }
