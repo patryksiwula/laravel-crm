@@ -14,7 +14,10 @@ class SearchClient extends SearchModel
 	public function mount(): void
 	{
 		parent::mount();
-		$this->client_type = 'Organization';
+		
+		if (empty($this->client_type) || $this->client_type === null)
+			$this->client_type = 'Organization';
+
 		$this->model = $this->namespace . $this->client_type;
 		$this->model_type = $this->model;
 	}
@@ -27,6 +30,8 @@ class SearchClient extends SearchModel
 			$models = $this->model::where('name', 'like', '%' . $this->modelSearch . '%')->get(['id', 'name']);
 
 		$this->showDropdown = (!empty($this->modelSearch) && $models->isNotEmpty()) ? true : false;
+
+		//dd($this->client_type);
 
         return view('livewire.search-client', compact('models'));
     }
