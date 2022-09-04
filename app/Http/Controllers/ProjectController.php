@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProjectRequest;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -34,7 +35,7 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create(): View
     {
@@ -47,11 +48,11 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param  \App\Http\Requests\StoreProjectRequest  $request
 	 * @param  \App\Services\ProjectService $projectService
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProjectRequest $request, ProjectService $projectService): RedirectResponse
+    public function store(StoreProjectRequest $request, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('create-projects');
 		$projectService->createProject($request->validated());
@@ -64,23 +65,30 @@ class ProjectController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(Project $project)
+    public function edit(Project $project): View
     {
-        //
+        $this->authorize('edit-projects');
+		$users = User::select(['id', 'name'])->get();
+
+		return view('projects.edit', compact('project', 'users'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateProjectRequest  $request
      * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project, ProjectService $projectService): RedirectResponse
     {
-        //
+        $this->authorize('edit-projects');
+        $projectService->updateProject($project, $request->validated());
+
+		return redirect()->route('projects.index')
+			->with('action', 'project_updated');
     }
 
     /**
