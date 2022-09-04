@@ -28,7 +28,7 @@ class UpdateTaskRequest extends FormRequest
 			'description' => ['nullable', 'string'],
 			'user_id' => ['nullable', 'numeric', 'min:1'],
 			'model_id' => ['required', 'numeric', 'min:1'],
-			'status' => ['required', 'in:pending,in progress,done']
+			'status' => ['required', 'string', 'in:pending,in progress,done']
         ];
     }
 }
