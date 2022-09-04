@@ -26,7 +26,7 @@ class TaskService
 	 *
 	 * @param  \App\Models\Task $task
 	 * @param  array $attributes
-	 * @return \App\Models\Task
+	 * @return bool
 	 */
 	public function updateTask(Task $task, array $attributes): bool
 	{
