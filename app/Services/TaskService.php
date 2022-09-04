@@ -14,8 +14,9 @@ class TaskService
 	 */
 	public function createTask(array $attributes): Task
 	{
-		$attributes['project_id'] = $attributes['model_id'];
-		unset($attributes['model_id']);
+		$attributes['user_id'] = $attributes['search'][0]['model_id'];
+		$attributes['project_id'] = $attributes['search'][1]['model_id'];
+		unset($attributes['search'][0]['model_id'], $attributes['search'][1]['model_id']);
 		$attributes['status'] = 'pending';
 
 		return Task::create($attributes);
@@ -30,8 +31,9 @@ class TaskService
 	 */
 	public function updateTask(Task $task, array $attributes): bool
 	{
-		$attributes['project_id'] = $attributes['model_id'];
-		unset($attributes['model_id']);
+		$attributes['user_id'] = $attributes['search'][0]['model_id'];
+		$attributes['project_id'] = $attributes['search'][1]['model_id'];
+		unset($attributes['search'][0]['model_id'], $attributes['search'][1]['model_id']);
 
 		return $task->update($attributes);
 	}
