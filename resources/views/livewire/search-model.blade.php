@@ -19,6 +19,7 @@
 					'w-full',
 					'h-60',
 					'absolute',
+					'z-10',
 					'overflow-auto'])
 			x-show="open">
 
@@ -29,7 +30,12 @@
 			@endforelse
 		</ul>
 
-		<input type="hidden" name="model_id" wire:model="model_id">
-		<input type="hidden" name="model_type" wire:model="model_type">
+		@if ($multiple)
+			<input type="hidden" name="search[{{ $count }}][model_id]" wire:model="model_id">
+			<input type="hidden" name="search[{{ $count }}][model_type]" wire:model="model_type">
+		@else
+			<input type="hidden" name="model_id" wire:model="model_id">
+			<input type="hidden" name="model_type" wire:model="model_type">
+		@endif
 	</div>
 </div>
