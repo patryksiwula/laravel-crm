@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectRequest extends FormRequest
+class UpdateProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,8 @@ class ProjectRequest extends FormRequest
 			'deadline' => ['required', 'date'],
 			'user_id' => ['nullable', 'numeric', 'min:1'],
 			'model_id' => ['required', 'numeric', 'min:1'],
-			'model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person']
+			'model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person'],
+			'status' => ['required', 'string', 'in:pending,in progress,done']
         ];
     }
 }
