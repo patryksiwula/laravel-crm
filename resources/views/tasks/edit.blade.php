@@ -30,23 +30,13 @@
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">{{ $task->description }}</textarea>
                     </div>
 
+					@php $i = 0; @endphp
+
 					<div class="mt-8">
-                        <label for="user_id" class="font-bold text-base text-black block mb-3">
-                            {{ __('Assigned to') }}
-                        </label>
-                        <select name="user_id" placeholder="{{ __('Task owner') }}" class="w-full border-[1.5px] border-form-stroke
-                            rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
-                            active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
-							<option>{{ __('Select task owner') }}</option>
-
-							@foreach ($users as $user)
-								<option value="{{ $user->id }}" @selected($user->id == $task->project->user->id)>{{ $user->name }}</option>
-							@endforeach
-						</select>
+						<livewire:search-model :modelPassed="'User'" :model_id="$task->user->id" :modelSearch="$task->user->name" :wire:key="search-0" :multiple="true" :count="$i++" />
                     </div>
-
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
-						<livewire:search-model :namespace="'App\Models\\'" :modelPassed="'Project'" :model_id="$task->project->id" :modelSearch="$task->project->name" />
+						<livewire:search-model :modelPassed="'Project'" :model_id="$task->project->id" :modelSearch="$task->project->name" :wire:key="search-1" :multiple="true" :count="$i++" />
 					</div>
 
 					<div class="mt-8">
@@ -65,6 +55,8 @@
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
                     	focus:outline-none focus:shadow-outline font-bold cursor-pointer">
                 </form>
+
+				{{ $errors }}
             </div>
         </div>
     </main>
