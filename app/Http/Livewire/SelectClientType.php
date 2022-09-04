@@ -11,7 +11,8 @@ class SelectClientType extends Component
 
 	public function mount(): void
 	{
-		$this->clientType = 'Organization';
+		if (empty($this->clientType) || $this->clientType === null)
+			$this->clientType = 'Organization';
 	}
 
     public function render()
