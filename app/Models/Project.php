@@ -35,7 +35,7 @@ class Project extends Model
 	/**
 	 * Get the client assigned to the project
 	 *
-	 * @return MorphTo
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
 	public function client(): MorphTo
 	{
