@@ -14,9 +14,16 @@ class ProjectService
 	 */
 	public function createProject(array $attributes): Project
 	{
-		$attributes['client_id'] = $attributes['model_id'];
-		$attributes['client_type'] = $attributes['model_type'];
-		unset($attributes['model_id'], $attributes['model_type']);
+		$attributes['user_id'] = $attributes['search'][0]['model_id'];
+		$attributes['client_id'] = $attributes['search'][1]['model_id'];
+		$attributes['client_type'] = $attributes['search'][1]['model_type'];
+		
+		unset(
+			$attributes['search'][0]['model_id'],
+			$attributes['search'][1]['model_id'], 
+			$attributes['search'][1]['model_type']
+		);
+		
 		$attributes['status'] = 'pending';
 
 		return Project::create($attributes);
@@ -31,9 +38,15 @@ class ProjectService
 	 */
 	public function updateProject(Project $project, array $attributes): bool
 	{
-		$attributes['client_id'] = $attributes['model_id'];
-		$attributes['client_type'] = $attributes['model_type'];
-		unset($attributes['model_id'], $attributes['model_type']);
+		$attributes['user_id'] = $attributes['search'][0]['model_id'];
+		$attributes['client_id'] = $attributes['search'][1]['model_id'];
+		$attributes['client_type'] = $attributes['search'][1]['model_type'];
+
+		unset(
+			$attributes['search'][0]['model_id'],
+			$attributes['search'][1]['model_id'], 
+			$attributes['search'][1]['model_type']
+		);
 
 		return $project->update($attributes);
 	}
