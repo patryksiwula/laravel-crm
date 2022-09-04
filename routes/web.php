@@ -3,13 +3,13 @@
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use App\Http\Livewire\DynamicInvoice;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,14 +38,20 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::view('/products/create', 'products.create')->name('products.create');
 	Route::resource('products', ProductController::class)->except(['show', 'create']);
-	
-	Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
-	Route::post('/invoices/{invoice}/send', [InvoiceController::class, 'send'])->name('invoices.send');
-	Route::view('/invoices/create', 'invoices.create')->name('invoices.create');
-	Route::resource('invoices', InvoiceController::class)->except(['create', 'store']);
 
+	Route::prefix('invoices')->group(function () {
+		Route::controller(InvoiceController::class)->group(function () {
+			Route::get('/{invoice}/download', 'download')->name('invoices.download');
+			Route::post('/{invoice}/send', 'send')->name('invoices.send');
+		});
+
+		Route::view('/create', 'invoices.create')->name('invoices.create');
+	});
+
+	Route::resource('invoices', InvoiceController::class)->except(['create', 'store']);
 	Route::resource('projects', ProjectController::class)->except('show');
 	Route::resource('tasks', TaskController::class)->except('show');
+	Route::resource('meetings', MeetingController::class)->except('show');
 });
 
 require __DIR__ . '/auth.php';
