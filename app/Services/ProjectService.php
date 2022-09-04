@@ -21,4 +21,20 @@ class ProjectService
 
 		return Project::create($attributes);
 	}
+
+	/**
+	 * Update selected project
+	 *
+	 * @param  \App\Models\Project $project
+	 * @param  array $attributes
+	 * @return bool
+	 */
+	public function updateProject(Project $project, array $attributes): bool
+	{
+		$attributes['client_id'] = $attributes['model_id'];
+		$attributes['client_type'] = $attributes['model_type'];
+		unset($attributes['model_id'], $attributes['model_type']);
+
+		return $project->update($attributes);
+	}
 }
