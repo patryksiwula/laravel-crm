@@ -25,7 +25,7 @@ class MeetingRequest extends FormRequest
     {
         return [
             'description' => ['required', 'string'],
-			'time' => ['required', 'datetime'],
+			'time' => ['required', 'date'],
 			'search.*.model_id' => ['required', 'numeric', 'min:1'],
 			'search.1.model_type' => ['required', 'string', 'in:App\Models\Client\Organization,App\Models\Client\Person']
         ];
