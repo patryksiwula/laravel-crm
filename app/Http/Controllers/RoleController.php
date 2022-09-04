@@ -21,7 +21,7 @@ class RoleController extends Controller
     {
         $roles = Role::with(['permissions' => function ($query) {
 			$query->select('name');
-		}])->get();
+		}])->paginate(15);
 
 		return view('users.roles.list', compact('roles'));
     }

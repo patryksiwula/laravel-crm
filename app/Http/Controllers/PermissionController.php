@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::with(['roles' => function ($query) {
 			$query->select('name');
-		}])->get();
+		}])->paginate(15);
 
 		return view('users.permissions.list', compact('permissions'));
     }
