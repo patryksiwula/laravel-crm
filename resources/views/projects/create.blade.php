@@ -38,24 +38,15 @@
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
                     </div>
 
-					<div class="mt-8">
-                        <label for="user_id" class="font-bold text-base text-black block mb-3">
-                            {{ __('Owner') }}
-                        </label>
-                        <select name="user_id" placeholder="{{ __('Project owner') }}" class="w-full border-[1.5px] border-form-stroke
-                            rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
-                            active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
-							<option>{{ __('Select project owner') }}</option>
+					@php $i = 0; @endphp
 
-							@foreach ($users as $user)
-								<option value="{{ $user->id }}">{{ $user->name }}</option>
-							@endforeach
-						</select>
+					<div class="mt-8">
+						<livewire:search-model :modelPassed="'User'" :multiple="true" :count="$i++" />
                     </div>
 
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
 						<livewire:select-client-type :clientTypes="[\App\Models\Client\Organization::class, \App\Models\Client\Person::class]" />
-						<livewire:search-client :namespace="'App\Models\Client\\'" :modelName="'Client'"/>
+						<livewire:search-client :namespace="'App\Models\Client\\'" :modelName="'Client'" :multiple="true" :count="$i++" />
 					</div>
 
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
