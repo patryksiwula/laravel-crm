@@ -63,4 +63,14 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Task::class);
 	}
+	
+	/**
+	 * Get the user's meetings
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function meetings(): HasMany
+	{
+		return $this->hasMany(Meeting::class);
+	}
 }

@@ -26,4 +26,15 @@ class Person extends Model
 	{
 		return $this->morphMany(Project::class, 'client');
 	}
+
+	/**
+	 * 
+	 * Get the client's meetings
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function meetings(): MorphMany
+	{
+		return $this->morphMany(Meeting::class, 'client');
+	}
 }
