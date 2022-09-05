@@ -9,13 +9,17 @@
 <body style="width: 100%; padding: 0px; font-family: sans-serif;">
 	<table style="display: table; width: 100%;">
 		<tr>
-			<td>{{ __('Company name') }}</td>
-			<td style="text-align: right; text-transform: uppercase;">{{ __('Invoice') }}</td>
+			<td style="font-size: 24px; font-weight: bold;">{{ $configs->get(0)->value }}</td>
+			<td style="text-align: right; font-size: 24px; font-weight: bold; text-transform: uppercase;">{{ __('Invoice') }}</td>
+		</tr>
+		<tr>
+			<td>
+				{{ __('VAT: ') }} <span style="font-weight: bold;">{{ $configs->get(3)->value }}</span>
+			</td>
 		</tr>
 		<tr>
 			<td style="padding-top: 20px; line-height: 24px;">
-				{{ __('32133 Random street') }} <br>
-				{{ __('New York, NY 12210') }}
+				{!! $configs->get(2)->value !!}
 			</td>
 		</tr>
 	</table>
@@ -45,20 +49,20 @@
 		<div style="float: left; width: 30%;">
 			<table style="display: table; width: 100%; text-align: right;">
 				<tr>
-					<td>{{ __('Invoice #') }}</td>
+					<td style="font-weight: bold;">{{ __('Invoice #') }}</td>
 					<td>{{ $invoice->invoice_number }}</td>
 				</tr>
 				<tr>
-					<td>{{ __('Invoice date') }}</td>
-					<td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d.m.Y') }}</td>
+					<td style="font-weight: bold;">{{ __('Invoice date') }}</td>
+					<td>{{ $invoice->invoice_date->format($configs->get(5)->value) }}</td>
 				</tr>
 				<tr>
-					<td>{{ __('Sale date') }}</td>
-					<td>{{ \Carbon\Carbon::parse($invoice->sale_date)->format('d.m.Y') }}</td>
+					<td style="font-weight: bold;">{{ __('Sale date') }}</td>
+					<td>{{ $invoice->sale_date->format($configs->get(5)->value) }}</td>
 				</tr>
 				<tr>
-					<td>{{ __('Due date') }}</td>
-					<td>{{ \Carbon\Carbon::parse($invoice->sale_date)->format('d.m.Y') }}</td>
+					<td style="font-weight: bold;">{{ __('Due date') }}</td>
+					<td>{{ $invoice->sale_date->format($configs->get(5)->value) }}</td>
 				</tr>
 			</table>
 		</div>
@@ -75,26 +79,37 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach ($invoice->products as $key => $product)
+				@forelse ($invoice->products as $key => $product)
 					<tr>
 						<td style="padding: 10px 20px; border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
 						<td style="padding: 10px 20px; border: 1px solid black;">{{ $product->name }}</td>
-						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">{{ $product->price }}</td>
-						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">{{ $product->quantity }}</td>
+						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">{{ number_format($product->price, 2) }}</td>
+						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">{{ $product->pivot->quantity }}</td>
 					</tr>
-				@endforeach
+				@empty
+					<tr>
+						<td style="padding: 10px 20px; border: 1px solid black; text-align: center;">&nbsp;</td>
+						<td style="padding: 10px 20px; border: 1px solid black;">&nbsp;</td>
+						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">&nbsp;</td>
+						<td style="padding: 10px 20px; border: 1px solid black; text-align: right;">&nbsp;</td>
+					</tr>
+				@endforelse
 
 				<tr>
 					<td colspan="3" style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">{{ __('Subtotal') }}</td>
-					<td style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">145.00</td>
+					<td style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">{{ number_format($subtotal, 2) }}</td>
 				</tr>
 				<tr>
-					<td colspan="3" style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">{{ __('VAT 23%') }}</td>
-					<td style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">33.35</td>
+					<td colspan="3" style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">{{ __('VAT ') . $configs->get(4)->value }}&percnt;</td>
+					<td style="padding: 10px 20px; border-right: 1px solid black; text-align: right;">{{ number_format($tax, 2) }}</td>
 				</tr>
 				<tr>
-					<td colspan="3" style="padding: 10px 20px; border-right: 1px solid black; text-align: right; font-size: 22px; font-weight: bold;">{{ __('Total') }}</td>
-					<td style="padding: 10px 20px; border: 1px solid black; text-align: right; background-color: #E6E6E6; font-size: 22px; font-weight: bold;">178.35</td>
+					<td colspan="3" style="padding: 10px 20px; border-right: 1px solid black; text-align: right; font-size: 22px; font-weight: bold;">
+						{{ __('Total') }}
+					</td>
+					<td style="padding: 10px 20px; border: 1px solid black; text-align: right; background-color: #E6E6E6; font-size: 22px; font-weight: bold;">
+						{{ number_format($subtotal + $tax, 2) }}
+					</td>
 				</tr>
 			</tbody>
 		</table>
