@@ -39,14 +39,25 @@
                             active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
                     </div>
 
-					<div class="mt-8">
-                        <label for="vat" class="font-bold text-base text-black block mb-3">
-                            {{ __('VAT number') }}
-                        </label>
-                        <input type="text" name="vat" placeholder="{{ __('Company VAT number') }}" value="{{ $configs->get(3)->value }}" class="w-full border-[1.5px] border-form-stroke
-                            rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
-                            active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
-                    </div>
+					<div class="mt-8 grid grid-cols-2 gap-2">
+						<div>
+							<label for="vat" class="font-bold text-base text-black block mb-3">
+								{{ __('VAT number') }}
+							</label>
+							<input type="text" name="vat" placeholder="{{ __('Company VAT number') }}" value="{{ $configs->get(3)->value }}" class="w-full border-[1.5px] border-form-stroke
+								rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
+								active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
+						</div>
+
+						<div>
+							<label for="tax" class="font-bold text-base text-black block mb-3">
+								{{ __('TAX') }}
+							</label>
+							<input type="number" name="tax" placeholder="{{ __('TAX rate') }}" value="{{ $configs->get(4)->value }}" class="w-full border-[1.5px] border-form-stroke
+								rounded-lg py-3 px-5 font-medium text-body-color placeholder-body-color outline-none focus:border-primary
+								active:border-primary transition disabled:bg-[#F5F7FD] disabled:cursor-default">
+						</div>
+					</div>
 
 					<div class="mt-8">
 						<label for="date_format" class="font-bold text-base text-black block mb-3">
