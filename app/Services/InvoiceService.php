@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Response;
 use Illuminate\Mail\SentMessage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -79,7 +80,11 @@ class InvoiceService
 	 */
 	public function downloadInvoice(Invoice $invoice): Response
 	{
-		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
+		$configs = DB::table('configs')->get();
+		$subtotal = $this->calculateSubtotal($invoice);
+		$tax = $subtotal * ($configs->get(4)->value / 100);
+
+		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice', 'configs', 'subtotal', 'tax'));
 		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
 
 		return $pdf->download($fileName);
@@ -98,7 +103,23 @@ class InvoiceService
 		$pdfContent = $pdf->download()->getOriginalContent();
 
 		Storage::put('public/invoices/' . $fileName, $pdfContent);
-		
+
 		return Mail::to($invoice->client->email)->send(new InvoiceMail('public/invoices/' . $fileName, $fileName));
+	}
+	
+	/**
+	 * Calculate subtotal of invoice's products
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @return float
+	 */
+	public function calculateSubtotal(Invoice $invoice): float
+	{
+		$subtotal = 0;
+
+		foreach ($invoice->products as $product)
+			$subtotal += $product->price * $product->pivot->quantity;
+
+		return $subtotal;
 	}
 }
