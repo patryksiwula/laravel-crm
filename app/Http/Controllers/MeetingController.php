@@ -7,6 +7,7 @@ use App\Models\Meeting;
 use App\Services\MeetingService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class MeetingController extends Controller
 {
@@ -18,8 +19,10 @@ class MeetingController extends Controller
     public function index(): View
     {
         $meetings = Meeting::with('user', 'client')->paginate(15);
+		$dateFormat = DB::table('configs')->where('id', 5)->get('value');
+		$dateFormat = $dateFormat->get(0)->value;
 
-		return view('meetings.list', compact('meetings'));
+		return view('meetings.list', compact('meetings', 'dateFormat'));
     }
 
     /**

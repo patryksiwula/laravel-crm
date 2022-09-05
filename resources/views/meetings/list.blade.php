@@ -37,7 +37,7 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $key + 1 }}</td>
 										<td class="p-3 px-5">{{ $meeting->description }}</td>
-										<td class="p-3 px-5">{{ $meeting->time }}</td>
+										<td class="p-3 px-5">{{ $meeting->time->format($dateFormat . ', H:i') }}</td>
 										<td class="p-3 px-5">
 											@can('edit-users')
 												<a href="{{ route('users.edit', ['user' => $meeting->user]) }}">

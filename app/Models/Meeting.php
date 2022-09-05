@@ -18,6 +18,8 @@ class Meeting extends Model
 		'client_type',
 		'client_id'
 	];
+
+	protected $dates = ['time'];
 	
 	/**
 	 * Get the user assigned to the meeting
