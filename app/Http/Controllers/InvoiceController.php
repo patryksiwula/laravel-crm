@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Invoice;
+use App\Services\InvoiceService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -72,24 +73,31 @@ class InvoiceController extends Controller
 		return redirect()->route('invoices.index')
 			->with('action', 'invoice_deleted');
     }
-
-	public function download(Invoice $invoice): Response
+	
+	/**
+	 * Generate invoice PDF and download it.
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @param  \App\Services\InvoiceService $invoiceService
+	 * @return \Illuminate\Http\Response
+	 */
+	public function download(Invoice $invoice, InvoiceService $invoiceService): Response
 	{
-		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
-		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
-
-		return $pdf->download($fileName);
+		return $invoiceService->downloadInvoice($invoice);
 	}
-
-	public function send(Invoice $invoice): RedirectResponse
+	
+	/**
+	 * Send an email to client containing the generated invoice.
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @param  \App\Services\InvoiceService $invoiceService
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function send(Invoice $invoice, InvoiceService $invoiceService): RedirectResponse
 	{
-		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
-		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
-		$pdfContent = $pdf->download()->getOriginalContent();
-
-		Storage::put('public/invoices/' . $fileName, $pdfContent);
-		Mail::to($invoice->client->email)->send(new InvoiceMail('public/invoices/' . $fileName, $fileName));
-
+		if ($invoiceService->sendInvoice($invoice) === null)
+			return redirect()->route('invoices.index')->with('action', 'invoice_send_error');
+			
 		return redirect()->route('invoices.index')
 			->with('action', 'invoice_sent');
 	}

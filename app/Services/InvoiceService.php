@@ -2,7 +2,13 @@
 
 namespace App\Services;
 
+use App\Mail\InvoiceMail;
 use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Response;
+use Illuminate\Mail\SentMessage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceService
 {		
@@ -63,5 +69,36 @@ class InvoiceService
 		$number = substr($number, 0, $backslash);
 
 		return ++$number . '/' . $month . '/' . $year;
+	}
+	
+	/**
+	 * Generate invoice in PDF format and download it.
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @return \Illuminate\Http\Response
+	 */
+	public function downloadInvoice(Invoice $invoice): Response
+	{
+		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
+		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
+
+		return $pdf->download($fileName);
+	}
+	
+	/**
+	 * Send an email to client with the generated invoice.
+	 *
+	 * @param  \App\Models\Invoice $invoice
+	 * @return \Illuminate\Mail\SentMessage|null
+	 */
+	public function sendInvoice(Invoice $invoice): SentMessage|null
+	{
+		$pdf = PDF::loadView('invoices.invoice-pdf', compact('invoice'));
+		$fileName = __('Invoice') . '_' . $invoice->invoice_number . '.pdf';
+		$pdfContent = $pdf->download()->getOriginalContent();
+
+		Storage::put('public/invoices/' . $fileName, $pdfContent);
+		
+		return Mail::to($invoice->client->email)->send(new InvoiceMail('public/invoices/' . $fileName, $fileName));
 	}
 }
