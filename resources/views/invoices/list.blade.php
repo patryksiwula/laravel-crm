@@ -37,9 +37,9 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
 										<td class="p-3 px-5">{{ $key + 1 }} </td>
                                         <td class="p-3 px-5">{{ $invoice->invoice_number }}</td>
-										<td class="p-3 px-5">{{ $invoice->invoice_date }}</td>
-										<td class="p-3 px-5">{{ $invoice->sale_date }}</td>
-										<td class="p-3 px-5">{{ $invoice->due_date }}</td>
+										<td class="p-3 px-5">{{ $invoice->invoice_date->format($dateFormat) }}</td>
+										<td class="p-3 px-5">{{ $invoice->sale_date->format($dateFormat) }}</td>
+										<td class="p-3 px-5">{{ $invoice->due_date->format($dateFormat) }}</td>
 										<td class="p-3 px-5">{{ $invoice->payment_method }}</td>
 										<td class="p-3 px-5">
 											@can('edit-clients')

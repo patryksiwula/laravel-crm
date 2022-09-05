@@ -25,6 +25,12 @@ class Invoice extends Model
 		'user_id'
 	];
 
+	protected $dates = [
+		'invoice_date',
+		'sale_date',
+		'due_date'
+	];
+
 	public function user(): BelongsTo
 	{
 		return $this->belongsTo(User::class);
