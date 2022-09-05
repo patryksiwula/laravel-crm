@@ -34,11 +34,13 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $permission->name }}</td>
 										<td class="p-3 px-5">
-											@forelse ($permission->roles->pluck('name') as $role)
-												{{ $role }} <br>
-											@empty
-												{{ '-----' }}
-											@endforelse
+											<div class="max-h-24 overflow-y-auto">
+												@forelse ($permission->roles->pluck('name') as $role)
+													{{ $role }} <br>
+												@empty
+													{{ '-----' }}
+												@endforelse
+											</div>
 										</td>
 
 										@canany(['edit-users', 'delete-users'])

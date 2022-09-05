@@ -31,11 +31,13 @@
                                     <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                         <td class="p-3 px-5">{{ $role->name }}</td>
                                         <td class="p-3 px-5">
-											@forelse ($role->permissions->pluck('name') as $permission)
-												{{ $permission }} <br>
-											@empty
-												{{ '-----' }}
-											@endforelse
+											<div class="max-h-24 overflow-y-auto">
+												@forelse ($role->permissions->pluck('name') as $permission)
+													{{ $permission }} <br>
+												@empty
+													{{ '-----' }}
+												@endforelse
+											</div>
 										</td>
 
 										@can('edit-users')
