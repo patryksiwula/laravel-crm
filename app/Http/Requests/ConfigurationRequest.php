@@ -28,6 +28,7 @@ class ConfigurationRequest extends FormRequest
 			'email' => ['required', 'email'],
 			'address' => ['required', 'string'],
             'vat' => ['required', 'numeric'],
+			'tax' => ['required', 'numeric'],
 			'date_format' => ['required', 'string', 'in:d.m.Y,d-m-Y,d/m/Y,Y.m.d,Y-m-d,Y/m/d']
         ];
     }
