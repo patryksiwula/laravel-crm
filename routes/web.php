@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
 		Route::match(['PUT', 'PATCH'], '/', 'update')->name('configs.update');
 	});
 
+	Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
 	Route::resource('documents', DocumentController::class)->except(['show', 'edit', 'update']);
 });
 
