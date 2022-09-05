@@ -20,6 +20,7 @@ class ConfigurationSeeder extends Seeder
 			['name' => 'email', 'value' => ''],
 			['name' => 'address', 'value' => ''],
 			['name' => 'vat', 'value' => ''],
+			['name' => 'tax', 'value' => ''],
 			['name' => 'date_format', 'value' => 'Y-m-d']
 		]);
     }
