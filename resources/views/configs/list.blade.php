@@ -38,7 +38,7 @@
 
 								<tr class="border-b hover:bg-orange-100 bg-gray-100">
 									<td class="text-center p-3 px-5">{{ __('Company address') }}</td>
-									<td class="text-center p-3 px-5">{{ $configs->get(2)->value }}</td>
+									<td class="text-center p-3 px-5">{!! $configs->get(2)->value !!}</td>
 								</tr>
 
 								<tr class="border-b hover:bg-orange-100 bg-gray-100">
@@ -47,8 +47,13 @@
 								</tr>
 
 								<tr class="border-b hover:bg-orange-100 bg-gray-100">
+									<td class="text-center p-3 px-5">{{ __('TAX') }}</td>
+									<td class="text-center p-3 px-5">{{ $configs->get(4)->value }}&percnt;</td>
+								</tr>
+
+								<tr class="border-b hover:bg-orange-100 bg-gray-100">
 									<td class="text-center p-3 px-5">{{ __('Date display format') }}</td>
-									<td class="text-center p-3 px-5">{{ $configs->get(4)->value }}</td>
+									<td class="text-center p-3 px-5">{{ $configs->get(5)->value }}</td>
 								</tr>
                             </tbody>
                         </table>
