@@ -73,4 +73,14 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Meeting::class);
 	}
+	
+	/**
+	 * Get the documents uploaded by the user
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function documents(): HasMany
+	{
+		return $this->hasMany(Document::class);
+	}
 }
