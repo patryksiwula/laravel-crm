@@ -30,7 +30,7 @@ class ProjectController extends Controller
 				->paginate(15);
 		}
 
-		$dateFormat = DB::table('configs')->where('id', 5)->get('value');
+		$dateFormat = DB::table('configs')->where('id', 6)->get('value');
 		$dateFormat = $dateFormat->get(0)->value;
 
 		return view('projects.list', compact('projects', 'dateFormat'));

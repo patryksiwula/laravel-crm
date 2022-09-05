@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\InvoiceMail;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -24,7 +20,7 @@ class InvoiceController extends Controller
     public function index(): View
     {
         $invoices = Invoice::with(['user', 'client'])->paginate(15);
-		$dateFormat = DB::table('configs')->where('id', 5)->get('value');
+		$dateFormat = DB::table('configs')->where('id', 6)->get('value');
 		$dateFormat = $dateFormat->get(0)->value;
 
 		return view('invoices.list', compact('invoices', 'dateFormat'));

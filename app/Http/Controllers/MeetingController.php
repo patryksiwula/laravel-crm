@@ -19,7 +19,7 @@ class MeetingController extends Controller
     public function index(): View
     {
         $meetings = Meeting::with('user', 'client')->paginate(15);
-		$dateFormat = DB::table('configs')->where('id', 5)->get('value');
+		$dateFormat = DB::table('configs')->where('id', 6)->get('value');
 		$dateFormat = $dateFormat->get(0)->value;
 
 		return view('meetings.list', compact('meetings', 'dateFormat'));
