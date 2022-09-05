@@ -14,7 +14,8 @@ class Document extends Model
 		'file_name',
 		'extension',
 		'path',
-		'description'
+		'description',
+		'user_id'
 	];
 	
 	/**
