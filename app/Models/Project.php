@@ -21,6 +21,8 @@ class Project extends Model
 		'client_id',
 		'client_type'
 	];
+
+	protected $dates = ['deadline'];
 	
 	/**
 	 * Get the user assigned to the project

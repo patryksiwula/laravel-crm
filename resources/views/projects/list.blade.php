@@ -55,7 +55,7 @@
 												@endswitch
 											</a>
 										</td>
-										<td class="p-3 px-5">{{ $project->deadline }}</td>
+										<td class="p-3 px-5">{{ $project->deadline->format($dateFormat) }}</td>
 										<td class="p-3 px-5">
 											@can('edit-users')
 												<a href="{{ route('users.edit', ['user' => $project->user]) }}">

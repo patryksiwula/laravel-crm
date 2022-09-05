@@ -10,6 +10,7 @@ use App\Services\ProjectService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -29,7 +30,10 @@ class ProjectController extends Controller
 				->paginate(15);
 		}
 
-		return view('projects.list', compact('projects'));
+		$dateFormat = DB::table('configs')->where('id', 5)->get('value');
+		$dateFormat = $dateFormat->get(0)->value;
+
+		return view('projects.list', compact('projects', 'dateFormat'));
     }
 
     /**
