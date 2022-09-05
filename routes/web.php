@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
+use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\PermissionController;
@@ -52,6 +54,14 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('projects', ProjectController::class)->except('show');
 	Route::resource('tasks', TaskController::class)->except('show');
 	Route::resource('meetings', MeetingController::class)->except('show');
+
+	Route::group(['prefix' => 'configs', 'controller' => ConfigurationController::class], function () {
+		Route::get('/', 'index')->name('configs.index');
+		Route::get('/edit', 'edit')->name('configs.edit');
+		Route::match(['PUT', 'PATCH'], '/', 'update')->name('configs.update');
+	});
+
+	Route::resource('documents', DocumentController::class)->except(['show', 'edit', 'update']);
 });
 
 require __DIR__ . '/auth.php';
