@@ -43,15 +43,11 @@
 				</x-nav-link-child>
 			</ul>
             <x-nav-link :href="route('organizations.index')" :active="request()->is('organizations*') || request()->is('people*')">
-                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
-					<g>
-						<rect fill="none" height="24" width="24" y="0"/>
-					</g>
-					<g>
-						<path d="M20,7h-5V4c0-1.1-0.9-2-2-2h-2C9.9,2,9,2.9,9,4v3H4C2.9,7,2,7.9,2,9v11c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V9 C22,7.9,21.1,7,20,7z M9,12c0.83,0,1.5,0.67,1.5,1.5c0,0.83-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5C7.5,12.67,8.17,12,9,12z M12,18H6 v-0.43c0-0.6,0.36-1.15,0.92-1.39C7.56,15.9,8.26,15.75,9,15.75s1.44,0.15,2.08,0.43c0.55,0.24,0.92,0.78,0.92,1.39V18z M13,9h-2V4 h2V9z M17.25,16.5h-2.5c-0.41,0-0.75-0.34-0.75-0.75v0c0-0.41,0.34-0.75,0.75-0.75h2.5c0.41,0,0.75,0.34,0.75,0.75v0 C18,16.16,17.66,16.5,17.25,16.5z M17.25,13.5h-2.5c-0.41,0-0.75-0.34-0.75-0.75v0c0-0.41,0.34-0.75,0.75-0.75h2.5 c0.41,0,0.75,0.34,0.75,0.75v0C18,13.16,17.66,13.5,17.25,13.5z"/>
-					</g>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+					<path d="M0 0h24v24H0V0z" fill="none"/>
+					<path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/>
 				</svg>
-                <span class="font-semibold text-sm">{{ __('Clients') }}</span>
+                <span class="font-semibold text-sm">{{ __('Contacts') }}</span>
             </x-nav-link>
 			<ul @class(['hidden' => !(request()->is('organizations*') || request()->is('people*'))])>
 				<x-nav-link-child :href="route('organizations.index')" :active="request()->is('organizations*')">
