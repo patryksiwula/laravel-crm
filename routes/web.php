@@ -5,6 +5,7 @@ use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
@@ -63,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
 	Route::resource('documents', DocumentController::class)->except(['show', 'edit', 'update']);
+	
+	Route::resource('leads', LeadController::class)->except('show');
 });
 
 require __DIR__ . '/auth.php';
