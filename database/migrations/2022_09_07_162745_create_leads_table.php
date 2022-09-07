@@ -26,7 +26,7 @@ return new class extends Migration
 				->cascadeOnUpdate()
 				->nullOnDelete();
 
-			$table->morphs('client');
+			$table->nullableMorphs('client');
             $table->timestamps();
         });
     }
