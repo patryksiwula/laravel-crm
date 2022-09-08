@@ -32,10 +32,10 @@
 					@php $i = 0; @endphp
 
 					<div class="mt-8">
-						<livewire:search-model :modelPassed="'User'" :wire:key="search-0" :multiple="true" :count="$i++" />
+						<livewire:search-model :modelPassed="'User'" :label="'Assigned to'" :wire:key="search-0" :multiple="true" :count="$i++" />
                     </div>
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
-						<livewire:search-model :modelPassed="'Project'" :wire:key="search-1" :multiple="true" :count="$i++" />
+						<livewire:search-model :modelPassed="'Project'" :label="'Project'" :wire:key="search-1" :multiple="true" :count="$i++" />
 					</div>
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
                     	focus:outline-none focus:shadow-outline font-bold cursor-pointer">

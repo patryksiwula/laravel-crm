@@ -41,12 +41,12 @@
 					@php $i = 0; @endphp
 
 					<div class="mt-8">
-						<livewire:search-model :modelPassed="'User'" :multiple="true" :count="$i++" />
+						<livewire:search-model :modelPassed="'User'" :label="'User'" :multiple="true" :count="$i++" />
                     </div>
 
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
 						<livewire:select-client-type :clientTypes="[\App\Models\Client\Organization::class, \App\Models\Client\Person::class]" />
-						<livewire:search-client :namespace="'App\Models\Client\\'" :modelName="'Client'" :multiple="true" :count="$i++" />
+						<livewire:search-client :namespace="'App\Models\Client\\'" :modelName="'Client'" :label="'Client'" :multiple="true" :count="$i++" />
 					</div>
 
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
