@@ -9,12 +9,14 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
 		@livewireStyles
+		<link href="{{ asset('bladewind/css/animate.min.css') }}" rel="stylesheet" />
+		<link href="{{ asset('bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 		@livewireScripts
+		<script src="{{ asset('bladewind/js/helpers.js') }}"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
