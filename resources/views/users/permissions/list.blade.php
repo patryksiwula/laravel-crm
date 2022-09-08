@@ -7,7 +7,7 @@
         </div>
 
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
-			@can('create-users')
+			@can('create-permissions')
 				<div class="mb-6">
 					<a href="{{ route('permissions.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
 						focus:outline-none focus:shadow-outline font-bold">
@@ -15,6 +15,16 @@
 					</a>
 				</div>
 			@endcan
+
+			@if (Session::has('action'))
+				<x-bladewind.notification />
+
+				<script type="text/javascript">
+					var title = `{{ __('Success') }}`;
+					var message = `{{ Session::get('action') }}`;
+					showNotification(title, message);
+				</script>
+			@endif
 			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
@@ -25,7 +35,7 @@
                                     <th class="text-left p-3 px-5">{{ __('Name') }}</th>
 									<th class="text-left p-3 px-5">{{ __('Assigned to roles') }}</th>
 
-									@canany(['edit-users', 'delete-users'])
+									@canany(['edit-permissions', 'delete-permissions'])
 										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
 									@endcanany
                                 </tr>
@@ -43,16 +53,16 @@
 											</div>
 										</td>
 
-										@canany(['edit-users', 'delete-users'])
+										@canany(['edit-permissions', 'delete-permissions'])
 											<td class="p-3 px-5 flex">
-												@can('edit-users')
+												@can('edit-permissions')
 													<a href="{{ route('permissions.edit', compact('permission')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
 														text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 														{{ __('Edit') }}
 													</a>
 												@endcan
 												
-												@can('delete-users')
+												@can('delete-permissions')
 													<form action="{{ route('permissions.destroy', compact('permission')) }}" method="POST">
 														@csrf
 														@method('DELETE')

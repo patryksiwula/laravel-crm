@@ -3,7 +3,13 @@
 @section('content')
     <main class="min-h-screen w-full ml-60 bg-gray-200">
         <div class="w-full py-5 text-center bg-white shadow-sm">
-            <h1 class="text-xl font-bold">{{ __('Leads') }}</h1>
+            <h1 class="text-xl font-bold">
+				{{ __('Leads') }}
+				
+				@if (!empty(request('stage')))
+					{{ ' (' . __(request('stage')) . ')' }}
+				@endif
+			</h1>
         </div>
 
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
@@ -15,6 +21,16 @@
 					</a>
 				</div>
 			@endcan
+
+			@if (Session::has('action'))
+				<x-bladewind.notification />
+
+				<script type="text/javascript">
+					var title = `{{ __('Success') }}`;
+					var message = `{{ Session::get('action') }}`;
+					showNotification(title, message);
+				</script>
+			@endif
 			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
@@ -31,7 +47,7 @@
 									<th class="text-left p-3 px-5">{{ __('Contact') }}</th>
 
 									@canany(['edit-leads', 'delete-leads'])
-										<th class="text-center p-3 px-5">{{ __('Action') }}</th>
+										<th class="text-left p-3 px-5">{{ __('Action') }}</th>
 									@endcanany
                                 </tr>
                                 
@@ -40,14 +56,33 @@
 										<td class="p-3 px-5">{{ $key + 1 }} </td>
                                         <td class="p-3 px-5">{{ $lead->name }}</td>
 										<td class="p-3 px-5">{{ $lead->source }}</td>
-										<td class="p-3 px-5">{{ $lead->stage }}</td>
+										<td class="p-3 px-5">
+											<a href="{{ route('leads.index') }}?stage={{ $lead->stage }}">
+												@switch($lead->stage)											
+													@case('negotiation')
+														<x-badge :color="'orange'">{{ __(ucfirst($lead->stage)) }}</x-badge>
+														@break
+													
+													@case('won')
+														<x-badge :color="'green'">{{ __(ucfirst($lead->stage)) }}</x-badge>
+														@break;
+
+													@case('lost')
+														<x-badge :color="'red'">{{ __(ucfirst($lead->stage)) }}</x-badge>
+														@break;
+
+													@default
+														<x-badge :color="'slate'">{{ __(ucfirst($lead->stage)) }}</x-badge>
+												@endswitch
+											</a>
+										</td>
 										<td class="p-3 px-5">{{ $lead->lead_value }}</td>
 
 										<td class="p-3 px-5">
 											@can('edit-users')
-												<a href="{{ route('users.edit', ['user' => $invoice->user]) }}">{{ $invoice->user->name }}</a>
+												<a href="{{ route('users.edit', ['user' => $lead->user]) }}">{{ $lead->user->name }}</a>
 											@else
-												{{ $invoice->user->name }}
+												{{ $lead->user->name }}
 											@endcan
 										</td>
 

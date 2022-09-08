@@ -3,7 +3,13 @@
 @section('content')
     <main class="min-h-screen w-full ml-60 bg-gray-200">
         <div class="w-full py-5 text-center bg-white shadow-sm">
-            <h1 class="text-xl font-bold">{{ __('Tasks') }}</h1>
+            <h1 class="text-xl font-bold">
+				{{ __('Tasks') }}
+
+				@if (!empty(request('status')))
+					{{ ' (' . __(request('status')) . ')' }}
+				@endif
+			</h1>
         </div>
 
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
@@ -15,6 +21,16 @@
 					</a>
 				</div>
 			@endcan
+
+			@if (Session::has('action'))
+				<x-bladewind.notification />
+
+				<script type="text/javascript">
+					var title = `{{ __('Success') }}`;
+					var message = `{{ Session::get('action') }}`;
+					showNotification(title, message);
+				</script>
+			@endif
 			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
@@ -39,11 +55,7 @@
 										<td class="p-3 px-5">{{ $task->name }}</td>
 										<td class="p-3 px-5">
 											<a href="{{ route('tasks.index') }}?status={{ $task->status }}">
-												@switch($task->status)
-													@case('pending')
-														<x-badge :color="'slate'">{{ __(ucfirst($task->status)) }}</x-badge>
-														@break
-													
+												@switch($task->status)													
 													@case('in progress')
 														<x-badge :color="'orange'">{{ __(ucfirst($task->status)) }}</x-badge>
 														@break
@@ -51,6 +63,9 @@
 													@case('done')
 														<x-badge :color="'green'">{{ __(ucfirst($task->status)) }}</x-badge>
 														@break;
+
+													@default
+														<x-badge :color="'slate'">{{ __(ucfirst($task->status)) }}</x-badge>
 												@endswitch
 											</a>
 										</td>

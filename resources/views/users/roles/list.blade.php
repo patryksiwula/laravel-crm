@@ -7,7 +7,7 @@
         </div>
 
         <div class="flex flex-col w-full h-full px-10 pt-12 pb-10 bg-gray-200">
-			@can('create-users')
+			@can('create-roles')
 				<div class="mb-6">
 					<a href="{{ route('roles.create') }}" class="text-xl bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded
 						focus:outline-none focus:shadow-outline font-bold">
@@ -15,6 +15,16 @@
 					</a>
 				</div>
 			@endcan
+
+			@if (Session::has('action'))
+				<x-bladewind.notification />
+
+				<script type="text/javascript">
+					var title = `{{ __('Success') }}`;
+					var message = `{{ Session::get('action') }}`;
+					showNotification(title, message);
+				</script>
+			@endif
 			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
@@ -40,7 +50,7 @@
 											</div>
 										</td>
 
-										@can('edit-users')
+										@can('edit-roles')
 											<td class="p-3 px-5 flex">
 												<a href="{{ route('roles.edit', compact('role')) }}" class="text-sm bg-blue-500 hover:bg-blue-700 
 													text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
