@@ -106,7 +106,6 @@ class UserTest extends TestCase
 		$this->actingAs(self::$admin);
 		
 		$response = $this->delete(route('users.destroy', ['user' => self::$user2]));
-
 		$response->assertRedirect(route('users.index'));
 	}
 }
