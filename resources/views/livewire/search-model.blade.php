@@ -1,12 +1,6 @@
 <div>
 	<label for="modelSearch" class="font-bold text-base text-black block mb-3">
-		@if (isset($modelPassed) && !empty($modelPassed))
-			{{ $modelPassed }}
-		@else
-			@if (isset($modelName) && !empty($modelName))
-				{{ $modelName }}
-			@endif
-		@endif
+		{{ $label }}
 	</label>
 
 	<div x-data="{ open: false, selectedModel: @entangle('modelSelected') }" class="relative">
