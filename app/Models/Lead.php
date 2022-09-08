@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 
 class Lead extends Model
 {
@@ -40,5 +42,24 @@ class Lead extends Model
 	public function client(): MorphTo
 	{
 		return $this->morphTo();
+	}
+
+	public function products(): BelongsToMany
+	{
+		return $this->belongsToMany(Product::class)
+			->withPivot('quantity');
+	}
+
+	public function addProduct(Product $product, int $quantity): void
+	{
+		$this->products()->attach($product, ['quantity' => $quantity]);
+	}
+
+	public function syncItems(Collection $items): void
+	{
+		$this->products()->detach();
+
+		foreach ($items as $item)
+			$this->products()->attach(Product::find($item['product_id']), ['quantity' => $item['quantity']]);
 	}
 }
