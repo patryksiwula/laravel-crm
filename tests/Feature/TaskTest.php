@@ -51,16 +51,7 @@ class TaskTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$project = Project::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'status' => 'pending',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
+		$project = Project::factory()->create();
 
 		$response = $this->post(route('tasks.store', [
 			'name' => 'test',
@@ -78,24 +69,8 @@ class TaskTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$project = Project::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'status' => 'pending',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
-
-		$task = Task::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'user_id' => $user->id,
-			'project_id' => $project->id
-		]);
+		$project = Project::factory()->create();
+		$task = Task::factory()->create();
 
 		$response = $this->from(route('tasks.index'))
 			->patch(route('tasks.update', ['task' => $task]), [
@@ -115,27 +90,10 @@ class TaskTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$project = Project::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'status' => 'pending',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
-
-		$task = Task::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'user_id' => $user->id,
-			'project_id' => $project->id
-		]);
+		$project = Project::factory()->create();
+		$task = Task::factory()->create();
 
 		$response = $this->delete(route('tasks.destroy', ['task' => $task]));
-
 		$response->assertRedirect(route('tasks.index'));
 	}
 }

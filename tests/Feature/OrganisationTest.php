@@ -62,30 +62,17 @@ class OrganisationTest extends TestCase
 	public function testAdminCanDisplayEditOrganisationForm(): void
 	{
 		$this->actingAs(self::$admin);
-		$organization = Organization::create([
-			'name' => 'testt',
-			'email' => 'testt@test.com',
-			'phone' => '2215678220',
-			'address' => 'some test address',
-			'vat' => '456772660'
-		]);
+		$organization = Organization::factory()->create();
 		$response = $this->get(route('organizations.edit', ['organization' => $organization]));
 		$response->assertOk();
 	}
 
-	public function testAdminCanDeleteRoles(): void
+	public function testAdminCanDeleteOrganisation(): void
 	{
 		$this->actingAs(self::$admin);
-		$organization = Organization::create([
-			'name' => 'testtttt',
-			'email' => 'testtttt@test.com',
-			'phone' => '2215678223',
-			'address' => 'some test address',
-			'vat' => '456772663'
-		]);
+		$organization = Organization::factory()->create();
 
 		$response = $this->delete(route('organizations.destroy', ['organization' => $organization]));
-
 		$response->assertRedirect(route('organizations.index'));
 	}
 }

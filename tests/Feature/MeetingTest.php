@@ -67,14 +67,7 @@ class MeetingTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$meeting = Meeting::create([
-			'description' => 'test',
-			'time' => '2022-10-21',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
+		$meeting = Meeting::factory()->create();
 
 		$response = $this->from(route('meetings.index'))
 			->patch(route('meetings.update', ['meeting' => $meeting]), [
@@ -94,14 +87,7 @@ class MeetingTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$meeting = Meeting::create([
-			'description' => 'test',
-			'time' => '2022-10-21',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
+		$meeting = Meeting::factory()->create();
 
 		$response = $this->delete(route('meetings.destroy', ['meeting' => $meeting]));
 

@@ -61,12 +61,8 @@ class ProductTest extends TestCase
 	public function testAdminCanDisplayEditProductForm(): void
 	{
 		$this->actingAs(self::$admin);
-		$product = Product::create([
-			'name' => 'test product',
-			'description' => 'test',
-			'price' => 1,
-			'quantity' => 3
-		]);
+		$product = Product::factory()->create();
+
 		$response = $this->get(route('products.edit', ['product' => $product]));
 		$response->assertOk();
 	}
@@ -74,15 +70,9 @@ class ProductTest extends TestCase
 	public function testAdminCanDeleteProducts(): void
 	{
 		$this->actingAs(self::$admin);
-		$product = Product::create([
-			'name' => 'test product',
-			'description' => 'test',
-			'price' => 2,
-			'quantity' => 4
-		]);
+		$product = Product::factory()->create();
 
 		$response = $this->delete(route('products.destroy', ['product' => $product]));
-
 		$response->assertRedirect(route('products.index'));
 	}
 }

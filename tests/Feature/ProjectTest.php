@@ -68,16 +68,7 @@ class ProjectTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$project = Project::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'status' => 'pending',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
+		$project = Project::factory()->create();
 
 		$response = $this->from(route('projects.index'))
 			->patch(route('projects.update', ['project' => $project]), [
@@ -99,19 +90,9 @@ class ProjectTest extends TestCase
 		$this->actingAs(self::$admin);
 		$user = User::factory()->create();
 		$client = Person::factory()->create();
-
-		$project = Project::create([
-			'name' => 'test',
-			'description' => 'test',
-			'deadline' => '2022-10-21',
-			'status' => 'in progress',
-			'user_id' => $user->id,
-			'client_type' => 'App\Models\Client\Person',
-			'client_id' => $client->id
-		]);
+		$project = Project::factory()->create();
 
 		$response = $this->delete(route('projects.destroy', ['project' => $project]));
-
 		$response->assertRedirect(route('projects.index'));
 	}
 }
