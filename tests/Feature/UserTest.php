@@ -30,12 +30,15 @@ class UserTest extends TestCase
 
 		if (is_null(self::$user1))
 		{
-			$createUsers = Permission::create(['name' => 'create-users']);
+			$permissions = [
+				Permission::findOrCreate('create-users'),
+				Permission::findOrCreate('edit-users'),
+				Permission::findOrCreate('delete-users')
+			];
 
-			$roleManager = Role::create(['name' => 'manager']);
-
-			$roleAdmin = Role::create(['name' => 'admin']);
-			$roleAdmin->givePermissionTo($createUsers);
+			$roleManager = Role::findOrCreate('manager');
+			$roleAdmin = Role::findOrCreate('admin');
+			$roleAdmin->syncPermissions($permissions);
 
 			self::$user1 = User::factory()->create();
 			self::$user2 = User::factory()->create();
@@ -77,7 +80,7 @@ class UserTest extends TestCase
 			'email' => 'test@email.com',
 			'password' => 'password',
 			'password_confirmation' => 'password',
-			'role' => 1
+			'roles' => [1]
 		]));
 
         $response->assertForbidden();
@@ -92,9 +95,18 @@ class UserTest extends TestCase
 			'email' => 'test@email.com',
 			'password' => 'password',
 			'password_confirmation' => 'password',
-			'role' => 1
+			'roles' => [1]
 		]));
 
         $response->assertRedirect(route('users.index'));
+	}
+
+	public function testAdminCanDeleteUser(): void
+	{
+		$this->actingAs(self::$admin);
+		
+		$response = $this->delete(route('users.destroy', ['user' => self::$user2]));
+
+		$response->assertRedirect(route('users.index'));
 	}
 }
