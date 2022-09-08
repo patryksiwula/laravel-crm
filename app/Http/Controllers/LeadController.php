@@ -96,6 +96,10 @@ class LeadController extends Controller
      */
     public function destroy(Lead $lead)
     {
-        //
+        $this->authorize('delete-leads');
+		$lead->delete();
+
+		return redirect()->route('leads.index')
+			->with('action', 'lead_deleted');
     }
 }
