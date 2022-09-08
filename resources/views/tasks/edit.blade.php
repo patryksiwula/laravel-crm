@@ -33,10 +33,12 @@
 					@php $i = 0; @endphp
 
 					<div class="mt-8">
-						<livewire:search-model :modelPassed="'User'" :model_id="$task->user->id" :modelSearch="$task->user->name" :wire:key="search-0" :multiple="true" :count="$i++" />
+						<livewire:search-model :modelPassed="'User'" :label="'Assigned to'" :model_id="$task->user->id" :modelSearch="$task->user->name"
+							:wire:key="search-0" :multiple="true" :count="$i++" />
                     </div>
 					<div class="mt-8 grid grid-cols-2 gap-x-2">
-						<livewire:search-model :modelPassed="'Project'" :model_id="$task->project->id" :modelSearch="$task->project->name" :wire:key="search-1" :multiple="true" :count="$i++" />
+						<livewire:search-model :modelPassed="'Project'" :label="'Project'" :model_id="$task->project->id" :modelSearch="$task->project->name"
+							:wire:key="search-1" :multiple="true" :count="$i++" />
 					</div>
 
 					<div class="mt-8">

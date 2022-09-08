@@ -33,7 +33,7 @@
 					@php $i = 0; @endphp
 
 					<div class="mt-8">
-						<livewire:search-model :modelPassed="'User'" :model_id="$meeting->user->id" :modelSearch="$meeting->user->name"
+						<livewire:search-model :modelPassed="'User'" :label="'User'" :model_id="$meeting->user->id" :modelSearch="$meeting->user->name"
 							:multiple="true" :count="$i++" />
                     </div>
 
@@ -41,7 +41,7 @@
 						<livewire:select-client-type :clientTypes="[\App\Models\Client\Organization::class, \App\Models\Client\Person::class]"
 							:clientType="substr($meeting->client::class, 18)" />
 						<livewire:search-client :namespace="'App\Models\Client\\'" :client_type="substr($meeting->client::class, 18)" :modelName="'Client'"
-							:model_id="$meeting->client->id" :modelSearch="$meeting->client->name" :multiple="true" :count="$i++" />
+							:label="'Client'" :model_id="$meeting->client->id" :modelSearch="$meeting->client->name" :multiple="true" :count="$i++" />
 					</div>
 
                     <input type="submit" class="mt-10 text-lg bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded
