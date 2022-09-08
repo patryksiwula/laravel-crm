@@ -33,7 +33,7 @@ class RoleController extends Controller
      */
     public function create(): View
     {
-		$this->authorize('create-users');
+		$this->authorize('create-roles');
         $permissions = Permission::all();
 
 		return view('users.roles.create', compact('permissions'));
@@ -48,7 +48,7 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request, RoleService $roleService)
     {	
-		$this->authorize('create-users');
+		$this->authorize('create-roles');
 
         $roleService->createRole(
 			$request->validated('name'),
@@ -67,7 +67,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('edit-users');
+        $this->authorize('edit-roles');
 		$permissions = Permission::all();
 
 		return view('users.roles.edit', [
@@ -86,7 +86,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role, RoleService $roleService): RedirectResponse
     {
-		$this->authorize('edit-users');
+		$this->authorize('edit-roles');
 
         $roleService->updateRole(
 			$role,
@@ -106,7 +106,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role, RoleService $roleService)
     {
-        $this->authorize('delete-users');
+        $this->authorize('delete-roles');
 		$roleService->deleteRole($role);
 
 		return redirect()->route('roles.index')
