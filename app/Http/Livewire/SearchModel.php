@@ -17,6 +17,7 @@ class SearchModel extends Component
 	public string|null $model_type;
 	public bool $multiple;
 	public int $count;
+	public string $label;
 
 	public function mount(): void
 	{
@@ -39,6 +40,9 @@ class SearchModel extends Component
 
 		if (empty($this->count))
 			$this->count = 0;
+
+		if (empty($this->label))
+			$this->label = $this->modelPassed;
 	}
 
     public function render()
