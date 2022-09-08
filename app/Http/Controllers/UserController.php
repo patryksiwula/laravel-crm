@@ -113,7 +113,7 @@ class UserController extends Controller
 
         $user->delete();
 
-		return redirect()->route('users.list')
+		return redirect()->route('users.index')
 			->with('action', 'user_deleted');
     }
 }
