@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\OrganizationController;
 use App\Http\Controllers\Client\PersonController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LeadController;
@@ -27,10 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::redirect('/', 'dashboard');
 	
     Route::resource('users', UserController::class)->except('show');
