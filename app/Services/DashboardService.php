@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Lead;
 use App\Models\Meeting;
 use App\Models\Project;
 use App\Models\Task;
@@ -42,11 +43,16 @@ class DashboardService
 			->take(5)
 			->get();
 
+		$leads = Lead::where('user_id', Auth::user()->id)
+			->orderBy('updated_at', 'DESC')
+			->take(5)
+			->get();
+
 		$meetings = Meeting::where('user_id', Auth::user()->id)
 			->where('time', '>', Carbon::now())
 			->take(5)
 			->get();
 
-		return compact('allTasks', 'allProjects', 'meetings', 'userProjects', 'userTasks');
+		return compact('allTasks', 'allProjects', 'meetings', 'userProjects', 'userTasks', 'leads');
 	}
 }
