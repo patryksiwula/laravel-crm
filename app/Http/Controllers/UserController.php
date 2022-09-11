@@ -9,6 +9,7 @@ use App\Services\UserService;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -111,7 +112,8 @@ class UserController extends Controller
     {
 		$this->authorize('delete-users');
 
-        $user->delete();
+		if ($user->id !== Auth::id())
+        	$user->delete();
 
 		return redirect()->route('users.index')
 			->with('action', __('actions.user_deleted'));
