@@ -1,7 +1,9 @@
 <div class="md:flex w-60 fixed h-screen bg-slate-700">
     <nav x-data="{ open: false }" class="w-full h-full">
         <div class="bg-slate-800 border-slate-900 text-white text-center font-bold py-5 text-xl">
-            <h2>{{ __('Laravel CRM') }}</h2>
+			<a href="{{ route('dashboard') }}">
+				<h2>{{ __('CRM') }}</h2>
+			</a>
         </div>
         <ul class="h-[calc(100%-8rem)]">
             <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
