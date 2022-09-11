@@ -39,14 +39,17 @@ class DatabaseSeeder extends Seeder
 
 		$this->createPermissions();
 
-		$admin = Role::create(['name' => 'admin']);
-		$manager = Role::create(['name' => 'manager']);
+		$adminRole = Role::create(['name' => 'admin']);
+		$managerRole = Role::create(['name' => 'manager']);
 
-		$admin->givePermissionTo(Permission::all());
-		$manager->givePermissionTo(Permission::all());
-		$manager->revokePermissionTo('create-users');
-		$manager->revokePermissionTo('edit-users');
-		$manager->revokePermissionTo('delete-users');
+		$adminRole->givePermissionTo(Permission::all());
+		$managerRole->givePermissionTo(Permission::all());
+		$managerRole->revokePermissionTo('create-users');
+		$managerRole->revokePermissionTo('edit-users');
+		$managerRole->revokePermissionTo('delete-users');
+
+		$admin->assignRole('admin');
+		$managerRole->assignRole('manager');
 
         Organization::factory(30)->create();
 		Person::factory(30)->create();
