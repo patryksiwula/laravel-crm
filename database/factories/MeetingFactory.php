@@ -20,7 +20,7 @@ class MeetingFactory extends Factory
     {
         return [
             'description' => fake()->text(50),
-			'time' => fake()->dateTime(),
+			'time' => fake()->dateTimeBetween('now', '+4 weeks'),
 			'user_id' => User::all()->random()->id,
 			'client_type' => 'App\Models\Client\Person',
 			'client_id' => Person::all()->random()->id
