@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
 		$managerRole->revokePermissionTo('delete-users');
 
 		$admin->assignRole('admin');
-		$managerRole->assignRole('manager');
+		$manager->assignRole('manager');
 
         Organization::factory(30)->create();
 		Person::factory(30)->create();
