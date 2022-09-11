@@ -57,18 +57,7 @@ class TaskController extends Controller
         $taskService->createTask($request->validated());
 
 		return redirect()->route('tasks.index')
-			->with('action', 'task_created');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
+			->with('action', __('actions.task_created'));
     }
 
     /**
@@ -98,7 +87,7 @@ class TaskController extends Controller
         $taskService->updateTask($task, $request->validated());
 
 		return redirect()->route('tasks.index')
-			->with('action', 'task_updated');
+			->with('action', __('actions.task_updated'));
     }
 
     /**
@@ -113,6 +102,6 @@ class TaskController extends Controller
 		$task->delete();
 
 		return redirect()->route('tasks.index')
-			->with('action', 'task_deleted');
+			->with('action', __('actions.task_deleted'));
     }
 }

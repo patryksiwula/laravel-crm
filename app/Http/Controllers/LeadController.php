@@ -55,7 +55,7 @@ class LeadController extends Controller
 		$leadService->createLead($request->validated());
 
 		return redirect()->route('leads.index')
-			->with('action', 'lead_created');
+			->with('action', __('actions.lead_created'));
     }
 
     /**
@@ -85,7 +85,7 @@ class LeadController extends Controller
 		$leadService->updateLead($lead, $request->validated());
 
 		return redirect()->route('leads.index')
-			->with('action', 'lead_updated');
+			->with('action', __('actions.lead_updated'));
     }
 
     /**
@@ -100,6 +100,6 @@ class LeadController extends Controller
 		$lead->delete();
 
 		return redirect()->route('leads.index')
-			->with('action', 'lead_deleted');
+			->with('action', __('actions.lead_deleted'));
     }
 }

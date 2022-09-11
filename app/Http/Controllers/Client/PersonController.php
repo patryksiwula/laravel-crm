@@ -56,7 +56,7 @@ class PersonController extends Controller
 		);
 
 		return redirect()->route('people.index')
-			->with('action', 'person_created');
+			->with('action', __('actions.person_created'));
     }
 
     /**
@@ -91,7 +91,7 @@ class PersonController extends Controller
 		);
 
 		return redirect()->route('people.index')
-			->with('action', 'person_updated');
+			->with('action', __('actions.person_updated'));
     }
 
     /**
@@ -106,6 +106,6 @@ class PersonController extends Controller
 		$person->delete();
 
 		return redirect()->route('people.index')
-			->with('action', 'person_deleted');
+			->with('action', __('actions.person_deleted'));
     }
 }

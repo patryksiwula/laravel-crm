@@ -66,7 +66,7 @@ class DynamicInvoiceUpdate extends DynamicInvoice
 		$this->updateInvoiceProducts($this->invoice);
 
 		return redirect()->route('invoices.index')
-			->with('action', 'invoice_updated');
+			->with('action', __('actions.invoice_updated'));
 	}
 
 	/**

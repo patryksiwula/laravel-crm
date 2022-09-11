@@ -62,7 +62,7 @@ class ProjectController extends Controller
 		$projectService->createProject($request->validated());
 
 		return redirect()->route('projects.index')
-			->with('action', 'project_created');
+			->with('action', __('actions.project_created'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ProjectController extends Controller
         $projectService->updateProject($project, $request->validated());
 
 		return redirect()->route('projects.index')
-			->with('action', 'project_updated');
+			->with('action', __('actions.project_updated'));
     }
 
     /**
@@ -107,6 +107,6 @@ class ProjectController extends Controller
 		$project->delete();
 
 		return redirect()->route('projects.index')
-			->with('action', 'project_deleted');
+			->with('action', __('actions.project_deleted'));
     }
 }

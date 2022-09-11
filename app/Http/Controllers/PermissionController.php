@@ -48,7 +48,7 @@ class PermissionController extends Controller
         $permissionService->createPermission($request->validated('name'));
 
 		return redirect()->route('permissions.index')
-			->with('action', 'permission_created');
+			->with('action', __('actions.permission_created'));
     }
 
     /**
@@ -82,7 +82,7 @@ class PermissionController extends Controller
 		);
 
 		return redirect()->route('permissions.index')
-			->with('action', 'permission_updated');
+			->with('action', __('actions.permission_updated'));
     }
 
     /**
@@ -98,6 +98,6 @@ class PermissionController extends Controller
 		$permissionService->deletePermission($permission);
 
 		return redirect()->route('permissions.index')
-			->with('action', 'permission_deleted');
+			->with('action', __('actions.permission_deleted'));
     }
 }

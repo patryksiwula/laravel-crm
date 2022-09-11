@@ -55,7 +55,7 @@ class DynamicInvoiceCreate extends DynamicInvoice
 		$this->addProductsToInvoice($invoice);
 
 		return redirect()->route('invoices.index')
-			->with('action', 'invoice_created');
+			->with('action', __('actions.invoice_created'));
 	}
 	
 	/**

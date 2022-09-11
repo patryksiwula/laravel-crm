@@ -56,7 +56,7 @@ class RoleController extends Controller
 		);
 
 		return redirect()->route('roles.index')
-			->with('action', 'role_created');
+			->with('action', __('actions.role_created'));
     }
 
     /**
@@ -95,7 +95,7 @@ class RoleController extends Controller
 		);
 
 		return redirect()->route('roles.index')
-			->with('action', 'role_updated');
+			->with('action', __('actions.role_updated'));
     }
 
     /**
@@ -110,6 +110,6 @@ class RoleController extends Controller
 		$roleService->deleteRole($role);
 
 		return redirect()->route('roles.index')
-			->with('action', 'role_deleted');
+			->with('action', __('actions.role_deleted'));
     }
 }

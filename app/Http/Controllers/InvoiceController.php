@@ -67,7 +67,7 @@ class InvoiceController extends Controller
 		$invoice->delete();
 
 		return redirect()->route('invoices.index')
-			->with('action', 'invoice_deleted');
+			->with('action', __('actions.invoice_deleted'));
     }
 	
 	/**
@@ -95,6 +95,6 @@ class InvoiceController extends Controller
 			return redirect()->route('invoices.index')->with('action', 'invoice_send_error');
 			
 		return redirect()->route('invoices.index')
-			->with('action', 'invoice_sent');
+			->with('action', __('actions.invoice_sent'));
 	}
 }

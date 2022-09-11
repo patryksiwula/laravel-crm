@@ -55,7 +55,7 @@ class OrganizationController extends Controller
 		);
 
 		return redirect()->route('organizations.index')
-			->with('action', 'organization_created');
+			->with('action', __('actions.organisation_created'));
     }
 
     /**
@@ -91,7 +91,7 @@ class OrganizationController extends Controller
 		);
 
 		return redirect()->route('organizations.index')
-			->with('action', 'organisation_updated');
+			->with('action', __('actions.organisation_updated'));
     }
 
     /**
@@ -106,6 +106,6 @@ class OrganizationController extends Controller
 		$organization->delete();
 
 		return redirect()->route('organizations.index')
-			->with('action', 'organization_deleted');
+			->with('action', __('actions.organisation_deleted'));
     }
 }

@@ -33,7 +33,7 @@ class ProductController extends Controller
         Product::create($request->validated());
 
 		return redirect()->route('products.index')
-			->with('action', 'product_created');
+			->with('action', __('actions.product_created'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductController extends Controller
 		$product->update($request->validated());
 
 		return redirect()->route('products.index')
-			->with('action', 'product_updated');
+			->with('action', __('actions.product_updated'));
     }
 
     /**
@@ -77,6 +77,6 @@ class ProductController extends Controller
 		$product->delete();
 
 		return redirect()->route('products.index')
-			->with('action', 'product_deleted');
+			->with('action', __('actions.product_deleted'));
     }
 }

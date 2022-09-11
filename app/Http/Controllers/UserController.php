@@ -59,7 +59,7 @@ class UserController extends Controller
 		);
 
 		return redirect()->route('users.index')
-			->with('action', 'user_created');
+			->with('action', __('actions.user_created'));
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController extends Controller
 		);
 
 		return redirect()->route('users.index')
-			->with('action', 'user_updated');
+			->with('action', __('actions.user_updated'));
     }
 
     /**
@@ -114,6 +114,6 @@ class UserController extends Controller
         $user->delete();
 
 		return redirect()->route('users.index')
-			->with('action', 'user_deleted');
+			->with('action', __('actions.user_deleted'));
     }
 }

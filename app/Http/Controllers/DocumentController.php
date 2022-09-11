@@ -49,7 +49,7 @@ class DocumentController extends Controller
 		$documentService->createDocument($request->validated());
 
 		return redirect()->route('documents.index')
-			->with('action', 'document_created');
+			->with('action', __('actions.document_created'));
     }
 
     /**
@@ -65,7 +65,7 @@ class DocumentController extends Controller
 		$documentService->deleteDocument($document);
 
 		return redirect()->route('documents.index')
-			->with('action', 'document_deleted');
+			->with('action', __('actions.document_deleted'));
     }
 	
 	/**

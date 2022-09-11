@@ -60,7 +60,7 @@ class MeetingController extends Controller
 		$meetingService->createMeeting($request->validated());
 
 		return redirect()->route('meetings.index')
-			->with('action', 'meeting_created');
+			->with('action', __('actions.meeting_created'));
     }
 
     /**
@@ -90,7 +90,7 @@ class MeetingController extends Controller
 		$meetingService->updateMeeting($meeting, $request->validated());
 
 		return redirect()->route('meetings.index')
-			->with('action', 'meeting_updated');
+			->with('action', __('actions.meeting_updated'));
     }
 
     /**
@@ -105,6 +105,6 @@ class MeetingController extends Controller
 		$meeting->delete();
 
 		return redirect()->route('meetings.index')
-			->with('action', 'meeting_deleted');
+			->with('action', __('actions.meeting_deleted'));
     }
 }
