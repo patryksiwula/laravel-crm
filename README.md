@@ -37,3 +37,12 @@ php artisan migrate
 ````
 php artisan db:seed
 ````
+
+
+## Demo
+A live demo can be found [here](http://lcrm-free.herokuapp.com/)
+
+````
+user name: admin@admin.com
+password: admin
+````
