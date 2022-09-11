@@ -33,14 +33,12 @@
 				</tr>
 				<tr>
 					<td>
-						Jan Kowalski <br>
-						32133 Random street <br>
-						New York, NY 12210
+						{{ $invoice->client->name }} <br>
+						{!! str_replace(', ', '<br>', $invoice->client->address) !!}
 					</td>
 					<td>
-						Jan Kowalski <br>
-						32133 Random street <br>
-						New York, NY 12210
+						{{ $invoice->client->name }} <br>
+						{!! str_replace(', ', '<br>', $invoice->client->address) !!}
 					</td>
 				</tr>
 			</table>
@@ -62,7 +60,7 @@
 				</tr>
 				<tr>
 					<td style="font-weight: bold;">{{ __('Due date') }}</td>
-					<td>{{ $invoice->sale_date->format($configs->get(5)->value) }}</td>
+					<td>{{ $invoice->due_date->format($configs->get(5)->value) }}</td>
 				</tr>
 			</table>
 		</div>
@@ -112,6 +110,19 @@
 					</td>
 				</tr>
 			</tbody>
+		</table>
+
+		<table style="display: table; border-collapse: collapse; width: 100%; margin-top: 40px;">
+			<tr>
+				<td class="text-transform: uppercase;">
+					<h3>{{ __('Terms & conditions') }}</h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="font-weight: bold;">
+					{{ __('Payment due date') . ': ' . $invoice->due_date->format($configs->get(5)->value) }}
+				</td>
+			</tr>
 		</table>
 	</div>
 </body>
