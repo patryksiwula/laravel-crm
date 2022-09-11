@@ -12,6 +12,7 @@ use App\Models\Lead;
 use App\Models\Meeting;
 use App\Models\Project;
 use App\Models\Task;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -27,13 +28,13 @@ class DatabaseSeeder extends Seeder
 		$admin = User::create([
 			'name' => 'Test Admin',
 			'email' => 'admin@admin.com',
-			'password' => 'admin'
+			'password' => Hash::make('admin')
 		]);
 
 		$manager = User::create([
 			'name' => 'Test Manager',
 			'email' => 'manager@manager.com',
-			'password' => 'manager'
+			'password' => Hash::make('manager')
 		]);
 
 		$this->createPermissions();
