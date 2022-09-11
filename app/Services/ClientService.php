@@ -10,22 +10,12 @@ class ClientService
 	/**
 	 * Create a new organisation
 	 *
-	 * @param  string $name
-	 * @param  string $email
-	 * @param  string $phone
-	 * @param  string $address
-	 * @param  string $vat
+	 * @param  array $attributes
 	 * @return \App\Models\Client\Organization
 	 */
-	public function createOrganisation(string $name, string $email, string $phone, string $address, string $vat): Organization
+	public function createOrganisation(array $attributes): Organization
 	{
-		$organisation = Organization::create([
-			'name' => $name,
-			'email' => $email,
-			'phone' => $phone,
-			'address' => $address,
-			'vat' => $vat
-		]);
+		$organisation = Organization::create($attributes);
 
 		return $organisation;
 	}
@@ -34,33 +24,12 @@ class ClientService
 	 * Update an existing organisation
 	 *
 	 * @param  \App\Models\Client\Organization $organization
-	 * @param  string $name
-	 * @param  string $email
-	 * @param  string $phone
-	 * @param  string $address
-	 * @param  string $vat
+	 * @param  array $attributes
 	 * @return \App\Models\Client\Organization
 	 */
-	public function updateOrganization(Organization $organization, string $name, string $email, string $phone, string $address, string $vat): Organization
+	public function updateOrganization(Organization $organization, array $attributes): Organization
 	{
-		$fieldsToUpdate = [];
-
-		if ($name != $organization->name)
-			$fieldsToUpdate['name'] = $name;
-
-		if ($email != $organization->email)
-			$fieldsToUpdate['email'] = $email;
-
-		if ($phone != $organization->phone)
-			$fieldsToUpdate['phone'] = $phone;
-		 
-		if ($address != $organization->address)
-			$fieldsToUpdate['address'] = $address;
-		
-		if ($vat != $organization->vat)
-			$fieldsToUpdate['vat'] = $vat;
-
-		$organization->update($fieldsToUpdate);
+		$organization->update($attributes);
 
 		return $organization;
 	}
@@ -68,20 +37,12 @@ class ClientService
 	/**
 	 * Create a new person
 	 *
-	 * @param  string $name
-	 * @param  string $email
-	 * @param  string $phone
-	 * @param  string $address
+	 * @param  array $attributes
 	 * @return \App\Models\Client\Person
 	 */
-	public function createPerson(string $name, string $email, string $phone, string $address): Person
+	public function createPerson(array $attributes): Person
 	{
-		$person = Person::create([
-			'name' => $name,
-			'email' => $email,
-			'phone' => $phone,
-			'address' => $address
-		]);
+		$person = Person::create($attributes);
 
 		return $person;
 	}
@@ -90,29 +51,12 @@ class ClientService
 	 * Update an existing person
 	 *
 	 * @param  \App\Models\Client\Person $person
-	 * @param  string $name
-	 * @param  string $email
-	 * @param  string $phone
-	 * @param  string $address
+	 * @param  array $attributes
 	 * @return \App\Models\Client\Person
 	 */
-	public function updatePerson(Person $person, string $name, string $email, string $phone, string $address): Person
+	public function updatePerson(Person $person, array $attributes): Person
 	{
-		$fieldsToUpdate = [];
-
-		if ($name != $person->name)
-			$fieldsToUpdate['name'] = $name;
-
-		if ($email != $person->email)
-			$fieldsToUpdate['email'] = $email;
-
-		if ($phone != $person->phone)
-			$fieldsToUpdate['phone'] = $phone;
-		 
-		if ($address != $person->address)
-			$fieldsToUpdate['address'] = $address;
-
-		$person->update($fieldsToUpdate);
+		$person->update($attributes);
 
 		return $person;
 	}

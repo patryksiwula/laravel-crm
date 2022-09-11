@@ -47,13 +47,7 @@ class PersonController extends Controller
     public function store(StorePersonRequest $request, ClientService $clientService): RedirectResponse
     {
         $this->authorize('create-clients');
-
-        $clientService->createPerson(
-			$request->validated('name'),
-			$request->validated('email'),
-			$request->validated('phone'),
-			$request->validated('address')
-		);
+        $clientService->createPerson($request->validated());
 
 		return redirect()->route('people.index')
 			->with('action', __('actions.person_created'));
@@ -82,13 +76,7 @@ class PersonController extends Controller
     public function update(UpdatePersonRequest $request, Person $person, ClientService $clientService): RedirectResponse
     {
         $this->authorize('edit-clients');
-		$clientService->updatePerson(
-			$person,
-			$request->validated('name'),
-			$request->validated('email'),
-			$request->validated('phone'),
-			$request->validated('address')
-		);
+		$clientService->updatePerson($person, $request->validated());
 
 		return redirect()->route('people.index')
 			->with('action', __('actions.person_updated'));

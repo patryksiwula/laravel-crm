@@ -45,14 +45,7 @@ class OrganizationController extends Controller
     public function store(StoreOrganizationRequest $request, ClientService $clientService): RedirectResponse
     {
 		$this->authorize('create-clients');
-
-        $clientService->createOrganisation(
-			$request->validated('name'),
-			$request->validated('email'),
-			$request->validated('phone'),
-			$request->validated('address'),
-			$request->validated('vat')
-		);
+        $clientService->createOrganisation($request->validated());
 
 		return redirect()->route('organizations.index')
 			->with('action', __('actions.organisation_created'));
@@ -81,14 +74,7 @@ class OrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, Organization $organization, ClientService $clientService): RedirectResponse
     {
         $this->authorize('edit-clients');
-		$clientService->updateOrganization(
-			$organization,
-			$request->validated('name'),
-			$request->validated('email'),
-			$request->validated('phone'),
-			$request->validated('address'),
-			$request->validated('vat')
-		);
+		$clientService->updateOrganization($organization, $request->validated());
 
 		return redirect()->route('organizations.index')
 			->with('action', __('actions.organisation_updated'));
