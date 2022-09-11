@@ -21,13 +21,14 @@ class TaskController extends Controller
      */
     public function index(Request $request): View
     {
-		if ($request->status === null)
-        	$tasks = Task::with(['user', 'project'])->paginate(15);
-		else
-		{
-			$tasks = Task::with(['user', 'project'])->where('status', '=', $request->status)
-				->paginate(15);
-		}
+		if ($request->user_id !== null)
+			$wheres['user_id'] = $request->user_id;
+		
+		if ($request->status !== null)
+			$wheres['status'] = $request->status;
+
+		$tasks = Task::with(['user', 'project'])->where($wheres)
+			->paginate(15);
 
 		return view('tasks.list', compact('tasks'));
     }

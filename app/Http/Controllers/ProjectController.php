@@ -22,13 +22,14 @@ class ProjectController extends Controller
      */
     public function index(Request $request): View
     {
-		if ($request->status === null)
-        	$projects = Project::with(['user', 'client'])->paginate(15);
-		else
-		{
-			$projects = Project::with(['user', 'client'])->where('status', '=', $request->status)
-				->paginate(15);
-		}
+		if ($request->user_id !== null)
+			$wheres['user_id'] = $request->user_id;
+		
+		if ($request->status !== null)
+			$wheres['status'] = $request->status;
+
+		$projects = Project::with(['user', 'client'])->where($wheres)
+			->paginate(15);
 
 		$dateFormat = DB::table('configs')->where('id', 6)->get('value');
 		$dateFormat = $dateFormat->get(0)->value;
