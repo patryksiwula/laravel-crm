@@ -12,7 +12,7 @@ class PermissionService
 	 * @param  string $name
 	 * @return \Spatie\Permission\Models\Permission
 	 */
-	public function createPermission(string $name): Permission
+	public function createPermission(array $name): Permission
 	{
 		$permission = Permission::create([
 			'name' => $name
@@ -30,10 +30,9 @@ class PermissionService
 	 */
 	public function updatePermission(Permission $permission, string $name): Permission
 	{
-		if ($name !== $permission->name)
-			$permission->name = $name;
-
-		$permission->save();
+		$permission->update([
+			'name' => $name
+		]);
 
 		return $permission;
 	}

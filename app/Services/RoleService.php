@@ -9,18 +9,17 @@ class RoleService
 	/**
 	 * Create a new role
 	 *
-	 * @param  string $name
-	 * @param  ?array $permissions
+	 * @param  array $attributes
 	 * @return \Spatie\Permission\Models\Role
 	 */
-	public function createRole(string $name, ?array $permissions = []): Role
+	public function createRole(array $attributes): Role
 	{
 		$role = Role::create([
-			'name' => $name
+			'name' => $attributes['name']
 		]);
 
-		if (!empty($permissions))
-			$role->syncPermissions($permissions);
+		if (!empty($attributes['permissions']))
+			$role->syncPermissions($attributes['permissions']);
 
 		return $role;
 	}
@@ -29,17 +28,19 @@ class RoleService
 	 * Update specified role
 	 *
 	 * @param  \Spatie\Permission\Models\Role $role
-	 * @param  string $name
-	 * @param  array $permissions
+	 * @param  array $attributes
 	 * @return \Spatie\Permission\Models\Role
 	 */
-	public function updateRole(Role $role, string $name, array $permissions): Role
+	public function updateRole(Role $role, array $attributes): Role
 	{
-		if ($name !== $role->name)
-			$role->name = $name;
+		if (!empty($attributes['permissions']))
+			$role->syncPermissions($attributes['permissions']);
+		else
+			$role->syncPermissions([]);
 
-		$role->syncPermissions($permissions)
-			->save();
+		$role->update([
+			'name' => $attributes['name']
+		]);
 
 		return $role;
 	}

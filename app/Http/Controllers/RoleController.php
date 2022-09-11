@@ -49,11 +49,7 @@ class RoleController extends Controller
     public function store(StoreRoleRequest $request, RoleService $roleService)
     {	
 		$this->authorize('create-roles');
-
-        $roleService->createRole(
-			$request->validated('name'),
-			$request->validated('permissions')
-		);
+        $roleService->createRole($request->validated(),);
 
 		return redirect()->route('roles.index')
 			->with('action', __('actions.role_created'));
@@ -87,12 +83,7 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, Role $role, RoleService $roleService): RedirectResponse
     {
 		$this->authorize('edit-roles');
-
-        $roleService->updateRole(
-			$role,
-			$request->validated('name'),
-			$request->validated('permissions')
-		);
+        $roleService->updateRole($role, $request->validated());
 
 		return redirect()->route('roles.index')
 			->with('action', __('actions.role_updated'));
