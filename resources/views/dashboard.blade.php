@@ -28,6 +28,10 @@
 					</x-bladewind.card>
 
 					<x-bladewind.card :class="'w-full h-full flex justify-center'">
+						<x-leads :leads="$leads" />
+					</x-bladewind.card>
+
+					<x-bladewind.card :class="'w-full h-full flex justify-center'">
 						<x-meetings :meetings="$meetings" />
 					</x-bladewind.card>
 				</div>
