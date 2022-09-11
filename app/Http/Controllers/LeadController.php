@@ -19,13 +19,16 @@ class LeadController extends Controller
      */
     public function index(Request $request): View
     {
-		if ($request->stage === null)
-        	$leads = Lead::with(['user', 'client'])->paginate(15);
-		else
-		{
-			$leads = Lead::with(['user', 'client'])->where('stage', '=', $request->stage)
-				->paginate(15);
-		}
+		$wheres = [];
+
+		if ($request->user_id !== null)
+			$wheres['user_id'] = $request->user_id;
+
+		if ($request->stage !== null)
+			$wheres['stage'] = $request->stage;
+
+		$leads = Lead::with(['user', 'client'])->where($wheres)
+			->paginate(15);
 		
 		return view('leads.list', compact('leads'));
     }

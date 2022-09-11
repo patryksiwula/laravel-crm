@@ -21,6 +21,8 @@ class TaskController extends Controller
      */
     public function index(Request $request): View
     {
+		$wheres = [];
+		
 		if ($request->user_id !== null)
 			$wheres['user_id'] = $request->user_id;
 		
