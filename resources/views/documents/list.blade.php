@@ -23,6 +23,16 @@
 					</a>
 				</div>
 			@endcan
+
+			@if (Session::has('action'))
+				<x-bladewind.notification />
+
+				<script type="text/javascript">
+					var title = `{{ __('Success') }}`;
+					var message = `{{ Session::get('action') }}`;
+					showNotification(title, message);
+				</script>
+			@endif
 			
             <div class="w-full bg-white">
                 <div class="text-gray-900 bg-gray-200">
