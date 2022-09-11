@@ -61,15 +61,17 @@
 												@endcan
 												
 												@can('delete-users')
-												<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
-													@csrf
-													@method('DELETE')
+													@if($user->id !== Auth::id())
+														<form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
+															@csrf
+															@method('DELETE')
 
-													<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
-														py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-														{{ __('Delete') }}
-													</button>
-												</form>
+															<button class="ml-1 text-sm bg-red-500 hover:bg-red-700 text-white 
+																py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+																{{ __('Delete') }}
+															</button>
+														</form>
+													@endif
 												@endcan
 											</td>
 										@endcanany
