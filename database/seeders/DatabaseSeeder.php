@@ -12,6 +12,7 @@ use App\Models\Lead;
 use App\Models\Meeting;
 use App\Models\Project;
 use App\Models\Task;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -58,6 +59,15 @@ class DatabaseSeeder extends Seeder
 		Project::factory(10)->create();
 		Task::factory(20)->create();
 		Meeting::factory(5)->create();
+
+		DB::table('configs')->insert([
+			['name' => 'name', 'value' => ''],
+			['name' => 'email', 'value' => ''],
+			['name' => 'address', 'value' => ''],
+			['name' => 'vat', 'value' => ''],
+			['name' => 'tax', 'value' => ''],
+			['name' => 'date_format', 'value' => 'Y-m-d']
+		]);
     }
 
 	public function createPermissions(): void
